@@ -30,11 +30,13 @@ namespace Calculator_TDD
                 } while (!IsUserInputValid(userInput));
 
                 // Process data based on what was entered
+                // Command processing
                 if (enteredACommand)
                 {
                     ExecuteCommand();
-                    enteredACommand = false;
+                    enteredACommand = false;    // set false so you can go to normal operations after command executed
                 }
+                // Operations and numbers processing
                 else
                 {
                     switch (GetCurrentInputType())
@@ -224,8 +226,6 @@ Can be entered at any time
 
         private static void SetCommandType(string input)
         {
-            enteredACommand = true;
-
             if (input == "quit")
             {
                 command = SpecialCommand.quit;
@@ -244,6 +244,7 @@ Can be entered at any time
             // check if input is command, if yes then set input type, if no then check if input is valid
             if (IsInputValidAValidCommand(input))
             {
+                enteredACommand = true; // set to ture so that in main a command is executed instead of normal operations
                 SetCommandType(input);
             }           
             else if (!IsUserInputValid(input))
