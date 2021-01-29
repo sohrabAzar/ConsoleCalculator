@@ -21,7 +21,7 @@ namespace Calculator_TDD
                     userInput = Console.ReadLine();
                     ValidateUserInput(userInput);
 
-                } while (!IsUserInputValid(userInput));
+                } while (!IsUserInputValidMath(userInput));
 
                 // Process data based on what was entered
                 // Command processing
@@ -261,10 +261,20 @@ Can be entered at any time
         private static void DisplayMemory()
         {
             StringBuilder display = new StringBuilder();   // Used to create a displayable version of memory 
+            
 
             for (int i = 0; i < memory_userInputs.Count; i++)
             {
+                // check if * or /, if so add parantesis before and after to have a mathematically correct formula
+                if (memory_userInputs[i] == "*" || memory_userInputs[i] == "/")
+                {
+                    display.Insert(0, "(");
+                    display.Append(")");
+                }
+
+                // append input to display list
                 display.Append(memory_userInputs[i]);
+
 
                 // Show results for the final line
                 if (i == memory_userInputs.Count - 1)
@@ -319,7 +329,7 @@ Can be entered at any time
         #endregion
 
         #endregion
-         
+       
         #region ** PROCESS USER INPUT **
         private static void ValidateUserInput(string input)
         {
@@ -329,10 +339,10 @@ Can be entered at any time
                 enteredACommand = true; // set to ture so that in main a command is executed instead of normal operations
                 SetCommandType(input);
             }
-            // if input not command, check if valid, if so add it to memory, if not ask again
+            // if input not command, check if valid math (numbers and signs), if so add it to memory, if not ask again
             else
             {              
-                if (IsUserInputValid(input))
+                if (IsUserInputValidMath(input))
                 {
                     SaveInputToMemory(input);
                 }
@@ -343,14 +353,13 @@ Can be entered at any time
             }
 
         }
-
         private static void SaveInputToMemory(string input)
         {
             memory_userInputs.Add(input);
         }
 
         #region validate input
-        public static bool IsUserInputValid(string input)
+        public static bool IsUserInputValidMath(string input)
         {
             bool isInputValid = false;
 

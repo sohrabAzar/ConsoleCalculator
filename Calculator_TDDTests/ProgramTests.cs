@@ -66,7 +66,7 @@ namespace Calculator_TDD.Tests
             bool excpeted_1 = true;
             // Act
             Program.previousInputType = Program.InputType.Number;
-            bool actual_1 = Program.IsUserInputValid("+");
+            bool actual_1 = Program.IsUserInputValidMath("+");
             // Assert
             Assert.AreEqual(excpeted_1, actual_1);
 
@@ -75,7 +75,7 @@ namespace Calculator_TDD.Tests
             bool excpeted_2 = false;
             // Act
             Program.previousInputType = Program.InputType.Number;
-            bool actual_2 = Program.IsUserInputValid("as");
+            bool actual_2 = Program.IsUserInputValidMath("as");
             // Assert
             Assert.AreEqual(excpeted_2, actual_2);
 
@@ -84,7 +84,7 @@ namespace Calculator_TDD.Tests
             bool excpeted_3 = true;
             // Act
             Program.previousInputType = Program.InputType.Operation;
-            bool actual_3 = Program.IsUserInputValid("123");
+            bool actual_3 = Program.IsUserInputValidMath("123");
             // Assert
             Assert.AreEqual(excpeted_3, actual_3);
 
@@ -93,7 +93,7 @@ namespace Calculator_TDD.Tests
             bool excpeted_4 = false;
             // Act
             Program.previousInputType = Program.InputType.Operation;
-            bool actual_4 = Program.IsUserInputValid("asd");
+            bool actual_4 = Program.IsUserInputValidMath("asd");
             // Assert
             Assert.AreEqual(excpeted_4, actual_4);
         }
