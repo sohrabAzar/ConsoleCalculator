@@ -4,18 +4,6 @@ namespace Calculator_TDD
 {
     public class Program
     {
-<<<<<<< HEAD
-        public static InputType previousInputType = InputType.Operation;
-        public static OperationType lastOperationType = OperationType.none;
-        public static SpecialCommand command = SpecialCommand.none;
-        public static double result = 0;
-        public static double currentEnteredNumber = 0;
-
-        private static bool quit = false;
-        private static bool enteredACommand = false;
-        
-=======
->>>>>>> master
         static void Main(string[] args)
         {
             string userInput;
@@ -89,6 +77,7 @@ namespace Calculator_TDD
         public static InputType previousInputType = InputType.Operation;
         public static OperationType lastOperationType = OperationType.none;
         public static double result = 0;                                        // keeps track of the calculation results
+        public static double currentEnteredNumber = 0;                          // keeps track of the enetered number, was added during refactoring process number func to avoid doing same thing in validate and calculate funcs
 
         private static bool quit = false;                                       // used to exit program main while loop
         private static SpecialCommand command = SpecialCommand.none;            // used for keeping track of which special command was entered
