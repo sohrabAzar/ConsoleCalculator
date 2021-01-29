@@ -5,12 +5,12 @@ namespace Calculator_TDD
     public class Program
     {
         public static InputType previousInputType = InputType.Operation;
-        public static OperationType lastOperationType = OperationType.none;
-        public static SpecialCommand command = SpecialCommand.none;
-        public static double result = 0;
+        public static OperationType lastOperationType = OperationType.none;       
+        public static double result = 0;                                        // keeps track of the calculation results
 
-        private static bool quit = false;
-        private static bool enteredACommand = false;
+        private static bool quit = false;                                       // used to exit program main while loop
+        private static SpecialCommand command = SpecialCommand.none;            // used for keeping track of which special command was entered
+        private static bool enteredACommand = false;                            // used to process special commands in main
 
         static void Main(string[] args)
         {
