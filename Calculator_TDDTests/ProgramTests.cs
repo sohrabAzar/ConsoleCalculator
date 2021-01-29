@@ -146,5 +146,25 @@ namespace Calculator_TDD.Tests
             // Assert
             Assert.AreEqual(excpeted_3, actual_3);
         }
+
+        [TestMethod()]
+        public void IsInputValidAValidCommandTest()
+        {
+            // TEST CASE 1 (valid op should return ture)
+            // Arrange
+            bool excpeted_1 = true;
+            // Act
+            bool actual_1 = Program.IsInputValidAValidCommand("quit");
+            // Assert
+            Assert.AreEqual(excpeted_1, actual_1);
+
+            // TEST CASE 2 (invalid op should return false)
+            // Arrange
+            bool excpeted_2 = false;
+            // Act
+            bool actual_2 = Program.IsInputValidAValidCommand("as");
+            // Assert
+            Assert.AreEqual(excpeted_2, actual_2);
+        }
     }
 }

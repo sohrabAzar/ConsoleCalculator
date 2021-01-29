@@ -6,40 +6,45 @@ namespace Calculator_TDD
     {
         public static InputType previousInputType = InputType.Operation;
         public static OperationType lastOperationType = OperationType.none;
+        public static SpecialCommand command = SpecialCommand.help;
+
         public static double result = 0;
 
         static void Main(string[] args)
         {
-
             string userInput;
-           
-            do
+
+            while (true)
             {
-                ShowConsolePromot(previousInputType);
+                do
+                {
+                    ShowConsolePromot(previousInputType);
 
-                //Get user input
-                userInput = Console.ReadLine();
+                    //Get user input
+                    userInput = Console.ReadLine();
 
-                // Validate user input
-                ProcessUserInput(IsUserInputValid(userInput));
+                    // Validate user input
+                    ProcessUserInput(IsUserInputValid(userInput));
 
-            } while (!IsUserInputValid(userInput));
+                } while (!IsUserInputValid(userInput));
 
 
-            switch (GetCurrentInputType())
-            {
-                case InputType.Operation:
-                    /// entering operation  
-                    previousInputType = InputType.Operation;
-                    SetOperationType(userInput);
-                    break;
-                case InputType.Number:
-                    /// entering number
-                    previousInputType = InputType.Number;
-                    CalculateResult(userInput);                 
-                    DisplayResult();
-                    break;
+                switch (GetCurrentInputType())
+                {
+                    case InputType.Operation:
+                        /// entering operation  
+                        previousInputType = InputType.Operation;
+                        SetOperationType(userInput);
+                        break;
+                    case InputType.Number:
+                        /// entering number
+                        previousInputType = InputType.Number;
+                        CalculateResult(userInput);
+                        DisplayResult();
+                        break;
+                }
             }
+
         }
 
         #region MEMBERS
@@ -60,7 +65,7 @@ namespace Calculator_TDD
             convertFarenhitToCelsius
         }
 
-        enum SpecialCommand
+        public enum SpecialCommand
         {
             quit,
             help,
@@ -164,6 +169,8 @@ namespace Calculator_TDD
         {
             bool isInputValid = false;
 
+            isInputValid = IsInputValidAValidCommand(input);
+
             switch (previousInputType)
             {
                 case InputType.Number:
@@ -175,6 +182,26 @@ namespace Calculator_TDD
             }
             return isInputValid;
         }
+
+        public static bool IsInputValidAValidCommand(string input)
+        {
+            bool isInputValid = false;
+
+            if (input == "quit")
+            {
+                isInputValid = true;
+                command = SpecialCommand.quit;
+            }
+
+            if (input == "help")
+            {
+                isInputValid = true;
+                command = SpecialCommand.help;
+            }
+
+            return isInputValid;
+        }
+
         public static bool ValidateNumber(string input)
         {
             bool isInputValid = double.TryParse(input, out double a);
