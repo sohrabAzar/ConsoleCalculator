@@ -44,12 +44,10 @@ namespace Calculator_TDD
                             break;
                     }
                 }
-
             }
-
         }
       
-        #region MEMBERS
+        #region **** MEMBERS ****
         public enum InputType
         {
             Number,
@@ -86,7 +84,7 @@ namespace Calculator_TDD
 
         #endregion
 
-        #region METHODS
+        #region **** METHODS ****
 
         private static void IntroduceProgram()
         {
@@ -209,7 +207,7 @@ Can be entered at any time
             }
         }
 
-        #region COMMANDS
+        #region ** COMMANDS **
         private static void SetCommandType(string input)
         {
             foreach (SpecialCommand val in Enum.GetValues(typeof(SpecialCommand)))
@@ -257,21 +255,44 @@ Can be entered at any time
             previousInputType = InputType.Operation;
             lastOperationType = OperationType.none;
         }
+
+        #region newton
         private static void newton()
         {
+            double m;
+            double a;
+
             Reset();
 
-            Console.Write("m?> ");
-            string m = Console.ReadLine();
+            Console.WriteLine("\nm(mass) * a(acceleration) = F(force)");
 
-            Console.Write("a?> ");
-            string a = Console.ReadLine();
+            GetNewtonsLawInput("a", out a);
+            GetNewtonsLawInput("m", out m);
 
-            Console.WriteLine($"{a}*{m} \n" );            
-        }       
+            double f = m * a;
+
+            Console.WriteLine($"F = {f}(n) \n");
+        }
+        private static void GetNewtonsLawInput(string inputType, out double value)
+        {
+            bool inputIsValid;
+
+            do
+            {
+                Console.Write($"{inputType}?> ");
+                string input_m = Console.ReadLine();
+                inputIsValid = double.TryParse(input_m, out value);
+                if (!inputIsValid)
+                {
+                    Console.WriteLine("Enter valid mass\n");
+                }
+            } while (!inputIsValid);
+        }
         #endregion
 
-        #region PROCESS USER INPUT
+        #endregion
+         
+        #region ** PROCESS USER INPUT **
         private static void ValidateUserInput(string input)
         {
             // check if input is command, if yes then set input type, if no then check if input is valid
@@ -286,7 +307,7 @@ Can be entered at any time
             }
         }
 
-        #region VALIDATE USER INPUT
+        #region validate input
         public static bool IsUserInputValid(string input)
         {
             bool isInputValid = false;
