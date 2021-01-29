@@ -273,28 +273,55 @@ Can be entered at any time
         }
         public static StringBuilder BuildMemory()
         {
-            StringBuilder display = new StringBuilder();   // Used to create a displayable version of memory  
+
+            StringBuilder display = new StringBuilder();   // Used to create a displayable version of memory 
+            bool specialCommand = false;                   // Used to handle special commands
+            int j = 0;                                     // Index to manually keep track of the memory_results list
 
             for (int i = 0; i < memory_userInputs.Count; i++)
             {
-                // check if * or /, if so add parantesis before and after to have a mathematically correct formula
-                if (memory_userInputs[i] == "*" || memory_userInputs[i] == "/")
+                // Handeling special commands
+                // If a special operation is entered, break line and show it on a seperate line
+                if (memory_userInputs[i] == "C" || memory_userInputs[i] == "F")
                 {
-                    display.Insert(0, "(");
-                    display.Append(")");
+                    specialCommand = true;
+
+
+                    display.AppendLine();
+                    display.Append(memory_userInputs[i]);
+                    display.Append(memory_userInputs[i + 1]);
+
+                    display.AppendLine();
+                }
+                // If previous operation was special command then next string in memory is manually added so dont add it again
+                else if (specialCommand)
+                {
+                    specialCommand = false;
                 }
 
-                // append input to display list
-                display.Append(memory_userInputs[i]);
-
-
-                // Show results for the final line
-                if (i == memory_userInputs.Count - 1)
+                // Handeling normal inputs
+                // Append to display list
+                else
                 {
-                    display.Append(" = " + result);
+                    // check if * or /, if so add parantesis before and after to have a mathematically correct formula
+                    if (memory_userInputs[i] == "*" || memory_userInputs[i] == "/")
+                    {
+                        display.Insert(0, "(");
+                        display.Append(")");
+                    }
+
+                    // append input to display list
+                    display.Append(memory_userInputs[i]);
+
+
+                    // Show results for the final line
+                    if (i == memory_userInputs.Count - 1)
+                    {
+                        display.Append(" = " + result);
+                    }
                 }
             }
-
+            
             return display;
         }
         #endregion

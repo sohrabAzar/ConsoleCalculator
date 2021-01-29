@@ -194,7 +194,7 @@ namespace Calculator_TDD.Tests
         }
 
         [TestMethod()]
-        public void BuildMemoryTest()
+        public void BuildMemoryTest_MathOperations()
         {
             // TEST CASE 1 (simple addtion)
             // Arrange
