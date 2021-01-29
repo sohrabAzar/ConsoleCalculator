@@ -228,20 +228,29 @@ Can be entered at any time
 
         private static void SetCommandType(string input)
         {
-            if (input == "quit")
-            {
-                command = SpecialCommand.quit;
-            }
+            // loop through enm if text euqal set it
 
-            if (input == "help")
+            foreach (SpecialCommand val in Enum.GetValues(typeof(SpecialCommand)))
             {
-                command = SpecialCommand.help;
+                if (input == val.ToString())
+                {
+                    command = val;
+                }
             }
+            //    if (input == "quit")
+            //{
+            //    command = SpecialCommand.quit;
+            //}
 
-            if (input == "reset")
-            {
-                command = SpecialCommand.reset;
-            }
+            //if (input == "help")
+            //{
+            //    command = SpecialCommand.help;
+            //}
+
+            //if (input == "reset")
+            //{
+            //    command = SpecialCommand.reset;
+            //}
         }
         #endregion
 
