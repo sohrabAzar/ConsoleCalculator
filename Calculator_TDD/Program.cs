@@ -71,7 +71,8 @@ namespace Calculator_TDD
             quit,
             help,
             list,
-            reset
+            reset,
+            newton
         }
 
         public static InputType previousInputType = InputType.Operation;
@@ -195,6 +196,16 @@ Can be entered at any time
         }
 
         #region COMMANDS
+        private static void SetCommandType(string input)
+        {
+            foreach (SpecialCommand val in Enum.GetValues(typeof(SpecialCommand)))
+            {
+                if (input == val.ToString())
+                {
+                    command = val;
+                }
+            }
+        }
         private static void ExecuteCommand()
         {
             switch (command)
@@ -216,26 +227,34 @@ Can be entered at any time
 
                 case SpecialCommand.reset:
                     Console.Clear();
-                    result = 0;
-                    previousInputType = InputType.Operation;
-                    lastOperationType = OperationType.none;
+                    Reset();
                     break;
 
+                case SpecialCommand.newton:
+                    newton();
+                    break;
                 default:
                     break;
             }
         }
-
-        private static void SetCommandType(string input)
+        private static void Reset()
         {
-            foreach (SpecialCommand val in Enum.GetValues(typeof(SpecialCommand)))
-            {
-                if (input == val.ToString())
-                {
-                    command = val;
-                }
-            }
+            result = 0;
+            previousInputType = InputType.Operation;
+            lastOperationType = OperationType.none;
         }
+        private static void newton()
+        {
+            Reset();
+
+            Console.Write("m?> ");
+            string m = Console.ReadLine();
+
+            Console.Write("a?> ");
+            string a = Console.ReadLine();
+
+            Console.WriteLine($"{a}*{m} \n" );            
+        }       
         #endregion
 
         #region PROCESS USER INPUT
@@ -282,7 +301,7 @@ Can be entered at any time
         {
             bool isInputValid = false;
 
-            if (input == "quit" || input == "help" || input == "reset")
+            if (input == "quit" || input == "help" || input == "reset" || input == "newton")
             {
                 isInputValid = true;
             }
