@@ -11,7 +11,7 @@ namespace Calculator_TDD.Tests
     {
 
         [TestMethod()]
-        public void ValidateNumberTest_NotANumberShouldReturnFalse()
+        public void ValidateNumberTest()
         {
             // TEST CASE 1 (NotANumberShouldReturnFalse)
             // Arrange
@@ -108,6 +108,43 @@ namespace Calculator_TDD.Tests
             Program.SetOperationType("*");
             // Assert
             Assert.AreEqual(excpeted_2, Program.lastOperationType);
+        }
+
+        [TestMethod()]
+        public void CalculateResultTest()
+        {
+            // TEST CASE 1 
+            // Arrange
+            double excpeted_1 = 110;
+            // Act
+            Program.result = 100;
+            Program.SetOperationType("+");
+            Program.CalculateResult("10");
+            double actual_1 = Program.result;
+            // Assert
+            Assert.AreEqual(excpeted_1, actual_1);
+
+            // TEST CASE 2 
+            // Arrange
+            double excpeted_2 = 30;
+            // Act
+            Program.result = 6;
+            Program.SetOperationType("*");
+            Program.CalculateResult("5");
+            double actual_2 = Program.result;
+            // Assert
+            Assert.AreEqual(excpeted_2, actual_2);
+
+            // TEST CASE 2 
+            // Arrange
+            double excpeted_3 = 10;
+            // Act
+            Program.result = 80;
+            Program.SetOperationType("/");
+            Program.CalculateResult("8");
+            double actual_3 = Program.result;
+            // Assert
+            Assert.AreEqual(excpeted_3, actual_3);
         }
     }
 }
