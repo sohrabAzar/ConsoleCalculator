@@ -205,17 +205,26 @@ Can be entered at any time
             {
                 case SpecialCommand.none:
                     break;
+
                 case SpecialCommand.quit:
                     quit = true;
                     break;
+
                 case SpecialCommand.help:
                     Console.Clear();
                     IntroduceProgram();
                     break;
+
                 case SpecialCommand.list:
                     break;
+
                 case SpecialCommand.reset:
+                    Console.Clear();
+                    result = 0;
+                    previousInputType = InputType.Operation;
+                    lastOperationType = OperationType.none;
                     break;
+
                 default:
                     break;
             }
@@ -231,6 +240,11 @@ Can be entered at any time
             if (input == "help")
             {
                 command = SpecialCommand.help;
+            }
+
+            if (input == "reset")
+            {
+                command = SpecialCommand.reset;
             }
         }
         #endregion
@@ -279,16 +293,10 @@ Can be entered at any time
         {
             bool isInputValid = false;
 
-            if (input == "quit")
+            if (input == "quit" || input == "help" || input == "reset")
             {
                 isInputValid = true;
             }
-
-            if (input == "help")
-            {
-                isInputValid = true;
-            }
-
             return isInputValid;
         }
         public static bool ValidateNumber(string input)
