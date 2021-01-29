@@ -166,8 +166,18 @@ Can be entered at any time
         {
             // if first input (operation none) then set result to it
             // else based on what operation type that was entered is do operation on result
+
+            double a = 0;
+
+            if (input == "MARCUS")
+            {
+                a = 42;
+            }
+            else
+            {
+                a = double.Parse(input);
+            }
             
-            bool isInputValid = double.TryParse(input, out double a);
 
             switch (lastOperationType)
             {
@@ -296,7 +306,16 @@ Can be entered at any time
         }
         public static bool ValidateNumber(string input)
         {
-            bool isInputValid = double.TryParse(input, out double a);
+            bool isInputValid = false;
+
+            if (input == "MARCUS")
+            {
+                isInputValid = true;
+            }
+            else
+            {
+                isInputValid = double.TryParse(input, out double a);
+            }              
             return isInputValid;
         }
         public static bool ValidateOperation(string input)

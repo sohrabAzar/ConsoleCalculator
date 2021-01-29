@@ -21,13 +21,21 @@ namespace Calculator_TDD.Tests
             // Assert
             Assert.AreEqual(excpeted_1, actual_1);
 
-            // TEST CASE 1 (NumberShouldReturnTrue)
+            // TEST CASE 2 (NumberShouldReturnTrue)
             // Arrange
             bool excpeted_2 = true;
             // Act
             bool actual_2 = Program.ValidateNumber("1");
             // Assert
             Assert.AreEqual(excpeted_2, actual_2);
+
+            // TEST CASE 2 (MARCUSShouldReturnTrue)
+            // Arrange
+            bool excpeted_3 = true;
+            // Act
+            bool actual_3 = Program.ValidateNumber("MARCUS");
+            // Assert
+            Assert.AreEqual(excpeted_3, actual_3);
         }
 
         [TestMethod()]
