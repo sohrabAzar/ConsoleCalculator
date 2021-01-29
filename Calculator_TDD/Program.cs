@@ -6,46 +6,56 @@ namespace Calculator_TDD
     {
         public static InputType previousInputType = InputType.Operation;
         public static OperationType lastOperationType = OperationType.none;
-        public static SpecialCommand command = SpecialCommand.help;
-
+        public static SpecialCommand command = SpecialCommand.none;
         public static double result = 0;
+
+        private static bool quit = false;
+        private static bool enteredACommand = false;
 
         static void Main(string[] args)
         {
             string userInput;
 
-            while (true)
+            IntroduceProgram();
+            
+            while (!quit)
             {
+                // Get Input and validate, only process if data is valid
                 do
                 {
                     ShowConsolePromot(previousInputType);
-
-                    //Get user input
                     userInput = Console.ReadLine();
-
-                    // Validate user input
-                    ProcessUserInput(IsUserInputValid(userInput));
+                    ValidateUserInput(userInput);
 
                 } while (!IsUserInputValid(userInput));
 
-
-                switch (GetCurrentInputType())
+                // Process data based on what was entered
+                if (enteredACommand)
                 {
-                    case InputType.Operation:
-                        /// entering operation  
-                        previousInputType = InputType.Operation;
-                        SetOperationType(userInput);
-                        break;
-                    case InputType.Number:
-                        /// entering number
-                        previousInputType = InputType.Number;
-                        CalculateResult(userInput);
-                        DisplayResult();
-                        break;
+                    ExecuteCommand();
+                    enteredACommand = false;
                 }
+                else
+                {
+                    switch (GetCurrentInputType())
+                    {
+                        case InputType.Operation:
+                            previousInputType = InputType.Operation;
+                            SetOperationType(userInput);
+                            break;
+                        case InputType.Number:
+                            previousInputType = InputType.Number;
+                            CalculateResult(userInput);
+                            DisplayResult();
+                            break;
+                    }
+                }
+
             }
 
         }
+
+        
 
         #region MEMBERS
         public enum InputType
@@ -67,6 +77,7 @@ namespace Calculator_TDD
 
         public enum SpecialCommand
         {
+            none,
             quit,
             help,
             list,
@@ -76,6 +87,39 @@ namespace Calculator_TDD
 
         #region METHODS
 
+        private static void IntroduceProgram()
+        {
+            Console.Clear();
+
+            // Title
+            Console.WriteLine("SOHRABS CALCULATOR \n");
+
+            // Guide
+            Console.WriteLine(
+@"**** HOW TO USE ****
+Enter any valid input and press enter 
+A list of valid inputs is shown below
+
+(VALID NUMBERS)
+Enter when prompt shows NUMBER
+- Numbers: Any valid doule
+- MARCUS: Write MARCUS instead of number 42
+
+(VALID OPERATIONS)
+Enter when prompt shows OPERATION
+- +, -, *,/: Normal math operations
+- C: Write C and the next number entered is converted to Farenhiet
+- F: Write F and the next number entered is converted to Celsius
+
+(SPECIAL COMMANDS)
+Can be entered at any time
+- quit: Exit program
+- help: Show guideS
+- list: see current calculation
+- reset: reset calculation
+*****************************************
+");
+        }
         private static void ShowConsolePromot(InputType lastInputType)
         {
             switch (lastInputType)
@@ -91,7 +135,7 @@ namespace Calculator_TDD
 
         private static InputType GetCurrentInputType()
         {
-            InputType a = InputType.Operation;
+            InputType a = InputType.Number;
 
             switch (previousInputType)
             {
@@ -155,31 +199,81 @@ namespace Calculator_TDD
             }
         }
 
-        #region PROCESS USER INPUT
-        private static void ProcessUserInput(bool isInputValid)
+        #region COMMANDS
+        private static void ExecuteCommand()
         {
-            if (!isInputValid)
+            switch (command)
+            {
+                case SpecialCommand.none:
+                    break;
+                case SpecialCommand.quit:
+                    quit = true;
+                    break;
+                case SpecialCommand.help:
+                    Console.Clear();
+                    IntroduceProgram();
+                    break;
+                case SpecialCommand.list:
+                    break;
+                case SpecialCommand.reset:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private static void SetCommandType(string input)
+        {
+            enteredACommand = true;
+
+            if (input == "quit")
+            {
+                command = SpecialCommand.quit;
+            }
+
+            if (input == "help")
+            {
+                command = SpecialCommand.help;
+            }
+        }
+        #endregion
+
+        #region PROCESS USER INPUT
+        private static void ValidateUserInput(string input)
+        {
+            // check if input is command, if yes then set input type, if no then check if input is valid
+            if (IsInputValidAValidCommand(input))
+            {
+                SetCommandType(input);
+            }           
+            else if (!IsUserInputValid(input))
             {
                 Console.WriteLine($"enter a valid {GetCurrentInputType()} \n");
             }
-
         }
+
         #region VALIDATE USER INPUT
         public static bool IsUserInputValid(string input)
         {
             bool isInputValid = false;
 
-            isInputValid = IsInputValidAValidCommand(input);
-
-            switch (previousInputType)
+            if (enteredACommand)
             {
-                case InputType.Number:
-                    isInputValid = ValidateOperation(input);
-                    break;
-                case InputType.Operation:
-                    isInputValid = ValidateNumber(input);
-                    break;
+                isInputValid = true;
             }
+            else
+            {
+                switch (previousInputType)
+                {
+                    case InputType.Number:
+                        isInputValid = ValidateOperation(input);
+                        break;
+                    case InputType.Operation:
+                        isInputValid = ValidateNumber(input);
+                        break;
+                }
+            }
+
             return isInputValid;
         }
 
@@ -190,18 +284,15 @@ namespace Calculator_TDD
             if (input == "quit")
             {
                 isInputValid = true;
-                command = SpecialCommand.quit;
             }
 
             if (input == "help")
             {
                 isInputValid = true;
-                command = SpecialCommand.help;
             }
 
             return isInputValid;
         }
-
         public static bool ValidateNumber(string input)
         {
             bool isInputValid = double.TryParse(input, out double a);
@@ -219,6 +310,7 @@ namespace Calculator_TDD
             return isInputValid;
         }
         #endregion
+
         #endregion
 
         #endregion
