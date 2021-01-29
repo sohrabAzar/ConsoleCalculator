@@ -8,10 +8,11 @@ namespace Calculator_TDD
         public static OperationType lastOperationType = OperationType.none;
         public static SpecialCommand command = SpecialCommand.none;
         public static double result = 0;
+        public static double currentEnteredNumber = 0;
 
         private static bool quit = false;
         private static bool enteredACommand = false;
-
+        
         static void Main(string[] args)
         {
             string userInput;
@@ -47,7 +48,7 @@ namespace Calculator_TDD
                             break;
                         case InputType.Number:
                             previousInputType = InputType.Number;
-                            CalculateResult(userInput);
+                            CalculateResult();
                             DisplayResult();
                             break;
                     }
@@ -162,43 +163,28 @@ Can be entered at any time
             if (input == "F") { lastOperationType = OperationType.convertFarenhitToCelsius; }
         }
 
-        public static void CalculateResult(string input)
-        {
-            // if first input (operation none) then set result to it
-            // else based on what operation type that was entered is do operation on result
-
-            double a = 0;
-
-            if (input == "MARCUS")
-            {
-                a = 42;
-            }
-            else
-            {
-                a = double.Parse(input);
-            }
-            
-
+        public static void CalculateResult()
+        {         
             switch (lastOperationType)
             {
                 case OperationType.add:
-                    result = result + a;
+                    result = result + currentEnteredNumber;
                     break;
 
                 case OperationType.reduce:
-                    result = result - a;
+                    result = result - currentEnteredNumber;
                     break;
 
                 case OperationType.multiple:
-                    result = result * a;
+                    result = result * currentEnteredNumber;
                     break;
 
                 case OperationType.devide:
-                    result = result / a;
+                    result = result / currentEnteredNumber;
                     break;
 
                 case OperationType.none:
-                    result = a;
+                    result = currentEnteredNumber;
                     break;
             }
         }
@@ -306,18 +292,25 @@ Can be entered at any time
         }
         public static bool ValidateNumber(string input)
         {
+            bool isInputValid = ProceesNumberInput(input);           
+            return isInputValid;
+        }
+        private static bool ProceesNumberInput(string input)
+        {
             bool isInputValid = false;
 
             if (input == "MARCUS")
             {
                 isInputValid = true;
+                currentEnteredNumber = 42;
             }
             else
             {
-                isInputValid = double.TryParse(input, out double a);
-            }              
+                isInputValid = double.TryParse(input, out currentEnteredNumber);
+            }
             return isInputValid;
         }
+
         public static bool ValidateOperation(string input)
         {
             bool isInputValid = false;

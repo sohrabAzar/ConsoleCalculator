@@ -127,7 +127,8 @@ namespace Calculator_TDD.Tests
             // Act
             Program.result = 100;
             Program.SetOperationType("+");
-            Program.CalculateResult("10");
+            Program.currentEnteredNumber = 10; 
+            Program.CalculateResult();
             double actual_1 = Program.result;
             // Assert
             Assert.AreEqual(excpeted_1, actual_1);
@@ -138,7 +139,8 @@ namespace Calculator_TDD.Tests
             // Act
             Program.result = 6;
             Program.SetOperationType("*");
-            Program.CalculateResult("5");
+            Program.currentEnteredNumber = 5;
+            Program.CalculateResult();
             double actual_2 = Program.result;
             // Assert
             Assert.AreEqual(excpeted_2, actual_2);
@@ -149,7 +151,8 @@ namespace Calculator_TDD.Tests
             // Act
             Program.result = 80;
             Program.SetOperationType("/");
-            Program.CalculateResult("8");
+            Program.currentEnteredNumber = 8;
+            Program.CalculateResult();
             double actual_3 = Program.result;
             // Assert
             Assert.AreEqual(excpeted_3, actual_3);
