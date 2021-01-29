@@ -296,7 +296,7 @@ Can be entered at any time
         private static void ValidateUserInput(string input)
         {
             // check if input is command, if yes then set input type, if no then check if input is valid
-            if (IsInputValidAValidCommand(input))
+            if (IsInputAValidCommand(input))
             {
                 enteredACommand = true; // set to ture so that in main a command is executed instead of normal operations
                 SetCommandType(input);
@@ -332,7 +332,7 @@ Can be entered at any time
             return isInputValid;
         }
 
-        public static bool IsInputValidAValidCommand(string input)
+        public static bool IsInputAValidCommand(string input)
         {
             bool isInputValid = false;
 

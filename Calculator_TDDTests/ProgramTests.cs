@@ -180,7 +180,7 @@ namespace Calculator_TDD.Tests
             // Arrange
             bool excpeted_1 = true;
             // Act
-            bool actual_1 = Program.IsInputValidAValidCommand("quit");
+            bool actual_1 = Program.IsInputAValidCommand("quit");
             // Assert
             Assert.AreEqual(excpeted_1, actual_1);
 
@@ -188,7 +188,7 @@ namespace Calculator_TDD.Tests
             // Arrange
             bool excpeted_2 = false;
             // Act
-            bool actual_2 = Program.IsInputValidAValidCommand("as");
+            bool actual_2 = Program.IsInputAValidCommand("as");
             // Assert
             Assert.AreEqual(excpeted_2, actual_2);
         }
