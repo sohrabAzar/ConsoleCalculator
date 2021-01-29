@@ -181,6 +181,14 @@ Can be entered at any time
                     result = result / currentEnteredNumber;
                     break;
 
+                case OperationType.convertCelsiusToFarenhit:
+                    result = (currentEnteredNumber * 1.8) + 32;
+                    break;
+
+                case OperationType.convertFarenhitToCelsius:
+                    result = result = (currentEnteredNumber - 32) / 1.8;
+                    break;
+
                 case OperationType.none:
                     result = currentEnteredNumber;
                     break;
@@ -192,6 +200,12 @@ Can be entered at any time
             if (lastOperationType != OperationType.none)
             {
                 Console.WriteLine(result + "\n");
+
+                // if temp conversion operation reset calculrator. This can be taken out as well if you want to continue using the result
+                if (lastOperationType == OperationType.convertCelsiusToFarenhit || lastOperationType == OperationType.convertFarenhitToCelsius)
+                {
+                    Reset();
+                }             
             }
         }
 

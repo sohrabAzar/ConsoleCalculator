@@ -119,7 +119,7 @@ namespace Calculator_TDD.Tests
         }
 
         [TestMethod()]
-        public void CalculateResultTest()
+        public void CalculateResultTest_MathOperations()
         {
             // TEST CASE 1 
             // Arrange
@@ -145,7 +145,7 @@ namespace Calculator_TDD.Tests
             // Assert
             Assert.AreEqual(excpeted_2, actual_2);
 
-            // TEST CASE 2 
+            // TEST CASE 3
             // Arrange
             double excpeted_3 = 10;
             // Act
@@ -156,6 +156,21 @@ namespace Calculator_TDD.Tests
             double actual_3 = Program.result;
             // Assert
             Assert.AreEqual(excpeted_3, actual_3);
+        }
+
+        [TestMethod()]
+        public void CalculateResultTest_TempConversions()
+        {
+            // TEST CASE 4 (test temp conversion)
+            // Arrange
+            double excpeted_4 = 32;
+            // Act
+            Program.SetOperationType("C");
+            Program.currentEnteredNumber = 0;
+            Program.CalculateResult();
+            double actual_4 = Program.result;
+            // Assert
+            Assert.AreEqual(excpeted_4, actual_4);
         }
 
         [TestMethod()]
