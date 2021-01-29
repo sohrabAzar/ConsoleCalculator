@@ -4,6 +4,7 @@ namespace Calculator_TDD
 {
     public class Program
     {
+<<<<<<< HEAD
         public static InputType previousInputType = InputType.Operation;
         public static OperationType lastOperationType = OperationType.none;
         public static SpecialCommand command = SpecialCommand.none;
@@ -13,6 +14,8 @@ namespace Calculator_TDD
         private static bool quit = false;
         private static bool enteredACommand = false;
         
+=======
+>>>>>>> master
         static void Main(string[] args)
         {
             string userInput;
@@ -57,16 +60,13 @@ namespace Calculator_TDD
             }
 
         }
-
-        
-
+      
         #region MEMBERS
         public enum InputType
         {
             Number,
             Operation,
         }
-
         public enum OperationType
         {
             none,
@@ -77,7 +77,6 @@ namespace Calculator_TDD
             convertCelsiusToFarenhit,
             convertFarenhitToCelsius
         }
-
         public enum SpecialCommand
         {
             none,
@@ -86,6 +85,15 @@ namespace Calculator_TDD
             list,
             reset
         }
+
+        public static InputType previousInputType = InputType.Operation;
+        public static OperationType lastOperationType = OperationType.none;
+        public static double result = 0;                                        // keeps track of the calculation results
+
+        private static bool quit = false;                                       // used to exit program main while loop
+        private static SpecialCommand command = SpecialCommand.none;            // used for keeping track of which special command was entered
+        private static bool enteredACommand = false;                            // used to process special commands in main
+
         #endregion
 
         #region METHODS
@@ -204,17 +212,26 @@ Can be entered at any time
             {
                 case SpecialCommand.none:
                     break;
+
                 case SpecialCommand.quit:
                     quit = true;
                     break;
+
                 case SpecialCommand.help:
                     Console.Clear();
                     IntroduceProgram();
                     break;
+
                 case SpecialCommand.list:
                     break;
+
                 case SpecialCommand.reset:
+                    Console.Clear();
+                    result = 0;
+                    previousInputType = InputType.Operation;
+                    lastOperationType = OperationType.none;
                     break;
+
                 default:
                     break;
             }
@@ -230,6 +247,11 @@ Can be entered at any time
             if (input == "help")
             {
                 command = SpecialCommand.help;
+            }
+
+            if (input == "reset")
+            {
+                command = SpecialCommand.reset;
             }
         }
         #endregion
@@ -278,16 +300,10 @@ Can be entered at any time
         {
             bool isInputValid = false;
 
-            if (input == "quit")
+            if (input == "quit" || input == "help" || input == "reset")
             {
                 isInputValid = true;
             }
-
-            if (input == "help")
-            {
-                isInputValid = true;
-            }
-
             return isInputValid;
         }
         public static bool ValidateNumber(string input)
