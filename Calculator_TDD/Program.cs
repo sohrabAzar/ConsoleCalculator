@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Calculator_TDD
 {
@@ -81,6 +83,11 @@ namespace Calculator_TDD
         private static bool quit = false;                                       // used to exit program main while loop
         private static SpecialCommand command = SpecialCommand.none;            // used for keeping track of which special command was entered
         private static bool enteredACommand = false;                            // used to process special commands in main
+
+        // varibles needed for the list command 
+        // used to save user input and calculation internally so they can be shown later 
+        private static List<string> memory_userInputs = new List<string>();
+        private static List<double> memory_results = new List<double>();
 
         #endregion
 
@@ -235,6 +242,7 @@ Can be entered at any time
                     break;
 
                 case SpecialCommand.list:
+                    DisplayMemory();
                     break;
 
                 case SpecialCommand.reset:
@@ -243,12 +251,32 @@ Can be entered at any time
                     break;
 
                 case SpecialCommand.newton:
-                    newton();
+                    Newton();
                     break;
                 default:
                     break;
             }
         }
+
+        private static void DisplayMemory()
+        {
+            StringBuilder display = new StringBuilder();   // Used to create a displayable version of memory 
+
+            for (int i = 0; i < memory_userInputs.Count; i++)
+            {
+                display.Append(memory_userInputs[i]);
+
+                // Show results for the final line
+                if (i == memory_userInputs.Count - 1)
+                {
+                    display.Append(" = " + result);
+                }
+            }
+
+            // Show final result
+            Console.WriteLine(display + "\n");
+        }
+
         private static void Reset()
         {
             result = 0;
@@ -257,7 +285,7 @@ Can be entered at any time
         }
 
         #region newton
-        private static void newton()
+        private static void Newton()
         {
             double m;
             double a;
@@ -300,11 +328,25 @@ Can be entered at any time
             {
                 enteredACommand = true; // set to ture so that in main a command is executed instead of normal operations
                 SetCommandType(input);
-            }           
-            else if (!IsUserInputValid(input))
-            {
-                Console.WriteLine($"enter a valid {GetCurrentInputType()} \n");
             }
+            // if input not command, check if valid, if so add it to memory, if not ask again
+            else
+            {              
+                if (IsUserInputValid(input))
+                {
+                    SaveInputToMemory(input);
+                }
+                else
+                {
+                    Console.WriteLine($"enter a valid {GetCurrentInputType()} \n");
+                }
+            }
+
+        }
+
+        private static void SaveInputToMemory(string input)
+        {
+            memory_userInputs.Add(input);
         }
 
         #region validate input
@@ -336,7 +378,7 @@ Can be entered at any time
         {
             bool isInputValid = false;
 
-            if (input == "quit" || input == "help" || input == "reset" || input == "newton")
+            if (input == "quit" || input == "help" || input == "reset" || input == "newton" || input == "list")
             {
                 isInputValid = true;
             }
