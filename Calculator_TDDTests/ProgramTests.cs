@@ -127,7 +127,7 @@ namespace Calculator_TDD.Tests
             // Act
             Program.result = 100;
             Program.SetOperationType("+");
-            Program.currentEnteredNumber = 10; 
+            Program.currentEnteredNumber = 10;
             Program.CalculateResult();
             double actual_1 = Program.result;
             // Assert
@@ -191,6 +191,43 @@ namespace Calculator_TDD.Tests
             bool actual_2 = Program.IsInputAValidCommand("as");
             // Assert
             Assert.AreEqual(excpeted_2, actual_2);
+        }
+
+        [TestMethod()]
+        public void BuildMemoryTest()
+        {
+            // TEST CASE 1 (simple addtion)
+            // Arrange
+            string excpeted_1 = "1+2 = 3";
+            Program.memory_userInputs.Add("1");
+            Program.memory_userInputs.Add("+");
+            Program.memory_userInputs.Add("2");
+            Program.result = 3;
+
+            // Act
+            StringBuilder  actual_1 = Program.BuildMemory();
+
+            // Assert
+            Assert.AreEqual(excpeted_1, actual_1.ToString());
+
+            // TEST CASE 2 (addtion and multiple)
+            // Arrange
+            Program.memory_userInputs.Clear();
+
+            string excpeted_2 = "(1+2)*5 = 15";
+            Program.memory_userInputs.Add("1");
+            Program.memory_userInputs.Add("+");
+            Program.memory_userInputs.Add("2");
+            Program.memory_userInputs.Add("*");
+            Program.memory_userInputs.Add("5");
+            Program.result = 15;
+
+            // Act
+            StringBuilder actual_2 = Program.BuildMemory();
+
+            // Assert
+            Assert.AreEqual(excpeted_2, actual_2.ToString());
+
         }
     }
 }

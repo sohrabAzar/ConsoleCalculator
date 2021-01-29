@@ -86,8 +86,8 @@ namespace Calculator_TDD
 
         // varibles needed for the list command 
         // used to save user input and calculation internally so they can be shown later 
-        private static List<string> memory_userInputs = new List<string>();
-        private static List<double> memory_results = new List<double>();
+        public static List<string> memory_userInputs = new List<string>();
+        public static List<double> memory_results = new List<double>();
 
         #endregion
 
@@ -204,7 +204,7 @@ Can be entered at any time
         {
             if (lastOperationType != OperationType.none)
             {
-                Console.WriteLine(result + "\n");
+                Console.WriteLine("= " + result + "\n");
 
                 // if temp conversion operation reset calculrator. This can be taken out as well if you want to continue using the result
                 if (lastOperationType == OperationType.convertCelsiusToFarenhit || lastOperationType == OperationType.convertFarenhitToCelsius)
@@ -258,10 +258,22 @@ Can be entered at any time
             }
         }
 
+        private static void Reset()
+        {
+            result = 0;
+            previousInputType = InputType.Operation;
+            lastOperationType = OperationType.none;
+        }
+
+        #region list
         private static void DisplayMemory()
         {
-            StringBuilder display = new StringBuilder();   // Used to create a displayable version of memory 
-            
+            StringBuilder display = BuildMemory();
+            Console.WriteLine(display + "\n");
+        }
+        public static StringBuilder BuildMemory()
+        {
+            StringBuilder display = new StringBuilder();   // Used to create a displayable version of memory  
 
             for (int i = 0; i < memory_userInputs.Count; i++)
             {
@@ -283,16 +295,9 @@ Can be entered at any time
                 }
             }
 
-            // Show final result
-            Console.WriteLine(display + "\n");
+            return display;
         }
-
-        private static void Reset()
-        {
-            result = 0;
-            previousInputType = InputType.Operation;
-            lastOperationType = OperationType.none;
-        }
+        #endregion
 
         #region newton
         private static void Newton()
