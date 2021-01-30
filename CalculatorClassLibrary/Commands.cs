@@ -6,10 +6,14 @@ namespace CalculatorClassLibrary
 {
     public class Commands
     {
-        public static bool EnteredACommand { get; set; }                                                            // used to process special commands in main
-        public static Enumrations.SpecialCommand Command { get; set; } = Enumrations.SpecialCommand.none;           // used for keeping track of which special command was entered
+        #region MEMBERS
+        // used to process special commands in main
+        public static bool EnteredACommand { get; set; }
+        // used for keeping track of which special command was entered
+        public static Enumrations.SpecialCommand Command { get; set; } = Enumrations.SpecialCommand.none;        
+        #endregion
 
-
+        #region EVENTS
         //Delegate to call list command in main
         public delegate void ListCommand();
         public static event ListCommand OnListCommandCalled;
@@ -17,8 +21,9 @@ namespace CalculatorClassLibrary
         //Delegate to call quit command in main
         public delegate void QuitCommand();
         public static event QuitCommand OnQuitCommandCalled;
+        #endregion
 
-
+        #region METHODS
         public static void ExecuteCommand()
         {
             switch (Command)
@@ -31,6 +36,10 @@ namespace CalculatorClassLibrary
                     {
                         OnQuitCommandCalled();
                     }
+                    else
+                    {
+                        throw new NullReferenceException("Event for showing list of operations is not hooked up in any subscriber, must hook it up in the project that is consuming this library");
+                    }
                     break;
 
                 case Enumrations.SpecialCommand.help:
@@ -42,7 +51,21 @@ namespace CalculatorClassLibrary
                     if (OnListCommandCalled != null)
                     {
                         OnListCommandCalled();
-                    }                   
+                    }
+                    else
+                    {
+                        throw new NullReferenceException("Event for showing list of operations is not hooked up in any subscriber, must hook it up in the project that is consuming this library");
+                    }
+                    //try
+                    //{
+                    //    OnListCommandCalled();
+                    //}
+                    //catch (NullReferenceException ex)
+                    //{
+                    //    Console.WriteLine(ex.Message);
+                    //    Console.WriteLine("Event for showing list of operations is not hooked up in any subscriber, must hook it up in the project that is consuming this library");
+                    //    Console.WriteLine(ex.StackTrace);
+                    //}
                     break;
 
                 case Enumrations.SpecialCommand.reset:
@@ -57,10 +80,9 @@ namespace CalculatorClassLibrary
                     break;
             }
         }
-
         public static void SetCommandType(string input)
         {
-            
+
 
             foreach (Enumrations.SpecialCommand val in Enum.GetValues(typeof(Enumrations.SpecialCommand)))
             {
@@ -70,7 +92,6 @@ namespace CalculatorClassLibrary
                 }
             }
         }
-
         public static void Newton()
         {
             double m;
@@ -87,7 +108,6 @@ namespace CalculatorClassLibrary
 
             Console.WriteLine($"F = {f}(n) \n");
         }
-
         private static void GetNewtonsLawInput(string inputType, out double value)
         {
             bool inputIsValid;
@@ -103,7 +123,6 @@ namespace CalculatorClassLibrary
                 }
             } while (!inputIsValid);
         }
-
         public static void IntroduceProgram()
         {
             Console.Clear();
@@ -137,5 +156,13 @@ Can be entered at any time
 *****************************************
 ");
         }
+        #endregion
+
+
+
+
+
+
+
     }
 }

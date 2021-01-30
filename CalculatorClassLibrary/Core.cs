@@ -6,13 +6,14 @@ namespace CalculatorClassLibrary
 {
     public class Core
     {
+        #region MEMBERS
         public static Enumrations.InputType PreviousInputType { get; set; } = Enumrations.InputType.Operation;
         public static Enumrations.OperationType LastOperationType { get; set; } = Enumrations.OperationType.none;
         public static double Result { get; set; }                                    // keeps track of the calculation results
         public static double CurrentEnteredNumber { get; set; }                      // keeps track of the enetered number, was added during refactoring process number func to avoid doing same thing in validate and calculate funcs       
+        #endregion
 
-
-
+        #region METHODS
         public static void CalculateResult()
         {
             switch (LastOperationType)
@@ -75,6 +76,9 @@ namespace CalculatorClassLibrary
 
             return a;
         }
+        #endregion
+
+
 
     }
 }
