@@ -32,7 +32,7 @@ namespace CalculatorClassLibrary
         {
             bool isInputValid = false;
 
-            if (Commands.enteredACommand)
+            if (Commands.EnteredACommand)
             {
                 isInputValid = true;
             }

@@ -11,8 +11,8 @@ namespace Calculator_TDD
         static Program()
         {
             // Bind Event handlers
-            Commands.OnListCommandCalled += ListCommand;
-            Commands.OnQuitCommandCalled += QuitCommand;
+            Commands.OnListCommandCalled += ListCommandEventHandler;
+            Commands.OnQuitCommandCalled += QuitCommandEventHandler;
         }
 
         static void Main(string[] args)
@@ -35,10 +35,10 @@ namespace Calculator_TDD
 
                 // Process data based on what was entered
                 // Command processing
-                if (Commands.enteredACommand)
+                if (Commands.EnteredACommand)
                 {
                     Commands.ExecuteCommand();
-                    Commands.enteredACommand = false;    // set false so you can go to normal operations after command executed
+                    Commands.EnteredACommand = false;    // set false so you can go to normal operations after command executed
                 }
                 // Operations and numbers processing
                 else
@@ -64,12 +64,11 @@ namespace Calculator_TDD
         #endregion
 
         #region **** EVENT HANDLERS ****
-        private static void ListCommand()
+        private static void ListCommandEventHandler()
         {
             DisplayMemory();
         }
-
-        private static void QuitCommand()
+        private static void QuitCommandEventHandler()
         {
             quit = true;
         }
@@ -115,7 +114,7 @@ namespace Calculator_TDD
             // check if input is command, if yes then set input type, if no then check if input is valid
             if (InputValidator.IsInputAValidCommand(input))
             {
-                Commands.enteredACommand = true; // set to ture so that in main a command is executed instead of normal operations
+                Commands.EnteredACommand = true; // set to ture so that in main a command is executed instead of normal operations
                 Commands.SetCommandType(input);
             }
             // if input not command, check if valid math (numbers and signs), if so add it to memory, if not ask again

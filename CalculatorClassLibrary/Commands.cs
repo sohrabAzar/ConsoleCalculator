@@ -6,8 +6,9 @@ namespace CalculatorClassLibrary
 {
     public class Commands
     {
-        public static bool enteredACommand = false;                            // used to process special commands in main
-        public static Enumrations.SpecialCommand command = Enumrations.SpecialCommand.none;            // used for keeping track of which special command was entered
+        public static bool EnteredACommand { get; set; }                                                            // used to process special commands in main
+        public static Enumrations.SpecialCommand Command { get; set; } = Enumrations.SpecialCommand.none;           // used for keeping track of which special command was entered
+
 
         //Delegate to call list command in main
         public delegate void ListCommand();
@@ -20,7 +21,7 @@ namespace CalculatorClassLibrary
 
         public static void ExecuteCommand()
         {
-            switch (command)
+            switch (Command)
             {
                 case Enumrations.SpecialCommand.none:
                     break;
@@ -57,7 +58,6 @@ namespace CalculatorClassLibrary
             }
         }
 
-
         public static void SetCommandType(string input)
         {
             
@@ -66,7 +66,7 @@ namespace CalculatorClassLibrary
             {
                 if (input == val.ToString())
                 {
-                    command = val;
+                    Command = val;
                 }
             }
         }
