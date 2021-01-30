@@ -213,7 +213,7 @@ Can be entered at any time
                 // if temp conversion operation reset calculrator. This can be taken out as well if you want to continue using the result
                 if (lastOperationType == OperationType.convertCelsiusToFarenhit || lastOperationType == OperationType.convertFarenhitToCelsius)
                 {
-                    Reset();
+                    ResetDisplay();
                 }             
             }
         }
@@ -262,14 +262,24 @@ Can be entered at any time
             }
         }
 
+        #region reset
         private static void Reset()
         {
-            //memory_results.Clear();
-            //memory_userInputs.Clear();
+            ResetMemory();
+            ResetDisplay();
+        }
+        private static void ResetDisplay()
+        {
             result = 0;
             previousInputType = InputType.Operation;
             lastOperationType = OperationType.none;
         }
+        private static void ResetMemory()
+        {
+            memory_results.Clear();
+            memory_userInputs.Clear();
+        }
+        #endregion
 
         #region list
         private static void DisplayMemory()
@@ -330,13 +340,11 @@ Can be entered at any time
             
             return display;
         }
-
         private static void AppanedResultToDisplay(StringBuilder display, ref int j)
         {
             display.Append(" = " + memory_results[j].ToString());
             j += 1;
         }
-
         private static void SaveResultToMemory(double result)
         {
             memory_results.Add(result);
@@ -376,7 +384,6 @@ Can be entered at any time
             } while (!inputIsValid);
         }
         #endregion
-
         #endregion
        
         #region ** PROCESS USER INPUT **
