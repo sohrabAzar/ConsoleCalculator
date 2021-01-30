@@ -58,9 +58,10 @@ namespace Calculator_TDD
                 }
             }
         }
-      
+
         #region **** MEMBERS ****
-        private static bool quit = false;                                       // used to exit program main while loop  
+        // used to exit program main while loop  
+        private static bool quit = false;                                       
         #endregion
 
         #region **** EVENT HANDLERS ****

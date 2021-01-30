@@ -38,6 +38,7 @@ namespace CalculatorClassLibrary
                     }
                     else
                     {
+                        // Throw execption when Event is not hooked up so program crashes and developers addresses it before release
                         throw new NullReferenceException("Event for showing list of operations is not hooked up in any subscriber, must hook it up in the project that is consuming this library");
                     }
                     break;
@@ -54,6 +55,7 @@ namespace CalculatorClassLibrary
                     }
                     else
                     {
+                        // Throw execption when Event is not hooked up so program crashes and developers addresses it before release
                         throw new NullReferenceException("Event for showing list of operations is not hooked up in any subscriber, must hook it up in the project that is consuming this library");
                     }
                     //try
