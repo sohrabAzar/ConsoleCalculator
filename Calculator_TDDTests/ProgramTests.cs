@@ -126,41 +126,6 @@ namespace Calculator_TDD.Tests
             Assert.AreEqual(excpeted_4, actual_4);
         }
 
-        [TestMethod()]
-        public void BuildMemoryTest_MathOperations()
-        {
-            // TEST CASE 1 (simple addtion)
-            // Arrange
-            string excpeted_1 = "1+2 = 3";
-            Program.memory_userInputs.Add("1");
-            Program.memory_userInputs.Add("+");
-            Program.memory_userInputs.Add("2");
-            Program.result = 3;
 
-            // Act
-            StringBuilder  actual_1 = Program.BuildMemory();
-
-            // Assert
-            Assert.AreEqual(excpeted_1, actual_1.ToString());
-
-            // TEST CASE 2 (addtion and multiple)
-            // Arrange
-            Program.memory_userInputs.Clear();
-
-            string excpeted_2 = "(1+2)*5 = 15";
-            Program.memory_userInputs.Add("1");
-            Program.memory_userInputs.Add("+");
-            Program.memory_userInputs.Add("2");
-            Program.memory_userInputs.Add("*");
-            Program.memory_userInputs.Add("5");
-            Program.result = 15;
-
-            // Act
-            StringBuilder actual_2 = Program.BuildMemory();
-
-            // Assert
-            Assert.AreEqual(excpeted_2, actual_2.ToString());
-
-        }
     }
 }

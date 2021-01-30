@@ -52,16 +52,6 @@ namespace Calculator_TDD
       
         #region **** MEMBERS ****
 
-        public enum OperationType
-        {
-            none,
-            add,
-            reduce,
-            multiple,
-            devide,
-            convertCelsiusToFarenhit,
-            convertFarenhitToCelsius
-        }
         public enum SpecialCommand
         {
             none,
@@ -73,7 +63,7 @@ namespace Calculator_TDD
         }
 
         public static Enumrations.InputType previousInputType = Enumrations.InputType.Operation;
-        public static OperationType lastOperationType = OperationType.none;
+        public static Enumrations.OperationType lastOperationType = Enumrations.OperationType.none;
         public static double result = 0;                                        // keeps track of the calculation results
         public static double currentEnteredNumber = 0;                          // keeps track of the enetered number, was added during refactoring process number func to avoid doing same thing in validate and calculate funcs
 
@@ -155,42 +145,42 @@ Can be entered at any time
 
         public static void SetOperationType(string input)
         {
-            if (input == "+") { lastOperationType = OperationType.add; }
-            if (input == "-") { lastOperationType = OperationType.reduce; }
-            if (input == "*") { lastOperationType = OperationType.multiple; }
-            if (input == "/") { lastOperationType = OperationType.devide; }
-            if (input == "C") { lastOperationType = OperationType.convertCelsiusToFarenhit; }
-            if (input == "F") { lastOperationType = OperationType.convertFarenhitToCelsius; }
+            if (input == "+") { lastOperationType = Enumrations.OperationType.add; }
+            if (input == "-") { lastOperationType = Enumrations.OperationType.reduce; }
+            if (input == "*") { lastOperationType = Enumrations.OperationType.multiple; }
+            if (input == "/") { lastOperationType = Enumrations.OperationType.devide; }
+            if (input == "C") { lastOperationType = Enumrations.OperationType.convertCelsiusToFarenhit; }
+            if (input == "F") { lastOperationType = Enumrations.OperationType.convertFarenhitToCelsius; }
         }
 
         public static void CalculateResult()
         {         
             switch (lastOperationType)
             {
-                case OperationType.add:
+                case Enumrations.OperationType.add:
                     result = result + currentEnteredNumber;
                     break;
 
-                case OperationType.reduce:
+                case Enumrations.OperationType.reduce:
                     result = result - currentEnteredNumber;
                     break;
 
-                case OperationType.multiple:
+                case Enumrations.OperationType.multiple:
                     result = result * currentEnteredNumber;
                     break;
 
-                case OperationType.devide:
+                case Enumrations.OperationType.devide:
                     result = result / currentEnteredNumber;
                     break;
 
-                case OperationType.convertCelsiusToFarenhit:
+                case Enumrations.OperationType.convertCelsiusToFarenhit:
                     ConvertTemperature(() =>
                     {
                         result = (currentEnteredNumber * 1.8) + 32;
                     });
                     break;
 
-                case OperationType.convertFarenhitToCelsius:
+                case Enumrations.OperationType.convertFarenhitToCelsius:
                     ConvertTemperature(() =>
                     {
                         result = (currentEnteredNumber - 32) / 1.8;
@@ -198,7 +188,7 @@ Can be entered at any time
 
                     break;
 
-                case OperationType.none:
+                case Enumrations.OperationType.none:
                     result = currentEnteredNumber;
                     break;
             }
@@ -206,21 +196,19 @@ Can be entered at any time
 
         private static void ConvertTemperature(Action action)
         {
-            SaveResultToMemory(result);
+            Memory.SaveResultToMemory(result);
             action();
-            SaveResultToMemory(result);
+            Memory.SaveResultToMemory(result);
         }
-
-
 
         private static void DisplayResult()
         {
-            if (lastOperationType != OperationType.none)
+            if (lastOperationType != Enumrations.OperationType.none)
             {
                 Console.WriteLine("= " + result + "\n");
 
                 // if temp conversion operation reset calculrator. This can be taken out as well if you want to continue using the result
-                if (lastOperationType == OperationType.convertCelsiusToFarenhit || lastOperationType == OperationType.convertFarenhitToCelsius)
+                if (lastOperationType == Enumrations.OperationType.convertCelsiusToFarenhit || lastOperationType == Enumrations.OperationType.convertFarenhitToCelsius)
                 {
                     ResetConsole();
                 }             
@@ -274,95 +262,86 @@ Can be entered at any time
         #region reset
         private static void Reset()
         {
-            ResetMemory();
+            Memory.ResetMemory();
             ResetConsole();
         }
         private static void ResetConsole()
         {
             result = 0;
             previousInputType = Enumrations.InputType.Operation;
-            lastOperationType = OperationType.none;
-        }
-        private static void ResetMemory()
-        {
-            memory_results.Clear();
-            memory_userInputs.Clear();
+            lastOperationType = Enumrations.OperationType.none;
         }
         #endregion
 
         #region list
         private static void DisplayMemory()
         {
-            StringBuilder display = BuildMemory();
+            StringBuilder display = Memory.BuildMemory(result);
             Console.WriteLine(display + "\n");
         }
-        public static StringBuilder BuildMemory()
-        {
+        //public static StringBuilder BuildMemory()
+        //{
 
-            StringBuilder display = new StringBuilder();   // Used to create a displayable version of memory 
-            bool TempConversion = false;                   // Used to handle special commands
-            int j = 0;                                     // Index to manually keep track of the memory_results list
-            int x = 0;                                     // Index to know where to add paranthesis to keep formulas math correct with list command
+        //    StringBuilder display = new StringBuilder();   // Used to create a displayable version of memory 
+        //    bool TempConversion = false;                   // Used to handle special commands
+        //    int j = 0;                                     // Index to manually keep track of the memory_results list
+        //    int x = 0;                                     // Index to know where to add paranthesis to keep formulas math correct with list command
 
-            for (int i = 0; i < memory_userInputs.Count; i++)
-            {
-                // Handeling temp conversion
-                // If temp conversion is entered, break line and show it on a seperate line
-                if (memory_userInputs[i] == "C" || memory_userInputs[i] == "F")
-                {
-                    TempConversion = true;
+        //    for (int i = 0; i < Memory.memory_userInputs.Count; i++)
+        //    {
+        //        // Handeling temp conversion
+        //        // If temp conversion is entered, break line and show it on a seperate line
+        //        if (Memory.memory_userInputs[i] == "C" || Memory.memory_userInputs[i] == "F")
+        //        {
+        //            TempConversion = true;
 
-                    AppanedResultToDisplay(display, ref j);
-                    display.AppendLine();
-                    display.Append(memory_userInputs[i]);
-                    display.Append(memory_userInputs[i + 1]);
-                    AppanedResultToDisplay(display, ref j);
-                    display.AppendLine();
+        //            AppanedResultToDisplay(display, ref j);
+        //            display.AppendLine();
+        //            display.Append(Memory.memory_userInputs[i]);
+        //            display.Append(Memory.memory_userInputs[i + 1]);
+        //            AppanedResultToDisplay(display, ref j);
+        //            display.AppendLine();
 
-                    // Add next open parathesis in the begin of next line 
-                    x = display.ToString().Length;
+        //            // Add next open parathesis in the begin of next line 
+        //            x = display.ToString().Length;
 
-                }
-                // If previous operation was special command then next string in memory is manually added so dont add it again
-                else if (TempConversion)
-                {
-                    TempConversion = false;
-                }
+        //        }
+        //        // If previous operation was special command then next string in memory is manually added so dont add it again
+        //        else if (TempConversion)
+        //        {
+        //            TempConversion = false;
+        //        }
 
-                // Handeling normal inputs
-                // Append to display list
-                else
-                {
-                    // check if * or /, if so add parantesis before and after to have a mathematically correct formula
-                    if (memory_userInputs[i] == "*" || memory_userInputs[i] == "/")
-                    {
-                        display.Insert(x, "(");
-                        display.Append(")");
-                    }
+        //        // Handeling normal inputs
+        //        // Append to display list
+        //        else
+        //        {
+        //            // check if * or /, if so add parantesis before and after to have a mathematically correct formula
+        //            if (Memory.memory_userInputs[i] == "*" || Memory.memory_userInputs[i] == "/")
+        //            {
+        //                display.Insert(x, "(");
+        //                display.Append(")");
+        //            }
                     
-                    // append input to display list
-                    display.Append(memory_userInputs[i]);
+        //            // append input to display list
+        //            display.Append(Memory.memory_userInputs[i]);
 
 
-                    // Show results for the final line
-                    if (i == memory_userInputs.Count - 1)
-                    {
-                        display.Append(" = " + result);
-                    }
-                }
-            }
+        //            // Show results for the final line
+        //            if (i == Memory.memory_userInputs.Count - 1)
+        //            {
+        //                display.Append(" = " + result);
+        //            }
+        //        }
+        //    }
             
-            return display;
-        }
-        private static void AppanedResultToDisplay(StringBuilder display, ref int j)
-        {
-            display.Append(" = " + memory_results[j].ToString());
-            j += 1;
-        }
-        private static void SaveResultToMemory(double result)
-        {
-            memory_results.Add(result);
-        }
+        //    return display;
+        //}
+        //private static void AppanedResultToDisplay(StringBuilder display, ref int j)
+        //{
+        //    display.Append(" = " + Memory.memory_results[j].ToString());
+        //    j += 1;
+        //}
         #endregion
 
         #region newton
@@ -414,7 +393,7 @@ Can be entered at any time
             {              
                 if (InputValidator.IsUserInputValidMath(input, enteredACommand, previousInputType, ref currentEnteredNumber))
                 {
-                    SaveInputToMemory(input);
+                    Memory.SaveInputToMemory(input);
                 }
                 else
                 {
@@ -423,11 +402,6 @@ Can be entered at any time
             }
 
         }
-        private static void SaveInputToMemory(string input)
-        {
-            memory_userInputs.Add(input);
-        }
-
         #endregion
         #endregion
 
