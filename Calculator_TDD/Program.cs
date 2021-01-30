@@ -291,16 +291,17 @@ Can be entered at any time
         {
 
             StringBuilder display = new StringBuilder();   // Used to create a displayable version of memory 
-            bool specialCommand = false;                   // Used to handle special commands
+            bool TempConversion = false;                   // Used to handle special commands
             int j = 0;                                     // Index to manually keep track of the memory_results list
+            int x = 0;                                     // Index to know where to add paranthesis to keep formulas math correct with list command
 
             for (int i = 0; i < memory_userInputs.Count; i++)
             {
-                // Handeling special commands
-                // If a special operation is entered, break line and show it on a seperate line
+                // Handeling temp conversion
+                // If temp conversion is entered, break line and show it on a seperate line
                 if (memory_userInputs[i] == "C" || memory_userInputs[i] == "F")
                 {
-                    specialCommand = true;
+                    TempConversion = true;
 
                     AppanedResultToDisplay(display, ref j);
                     display.AppendLine();
@@ -308,11 +309,14 @@ Can be entered at any time
                     display.Append(memory_userInputs[i + 1]);
                     AppanedResultToDisplay(display, ref j);
                     display.AppendLine();
+
+                    x = display.ToString().Length;
+
                 }
                 // If previous operation was special command then next string in memory is manually added so dont add it again
-                else if (specialCommand)
+                else if (TempConversion)
                 {
-                    specialCommand = false;
+                    TempConversion = false;
                 }
 
                 // Handeling normal inputs
@@ -322,10 +326,10 @@ Can be entered at any time
                     // check if * or /, if so add parantesis before and after to have a mathematically correct formula
                     if (memory_userInputs[i] == "*" || memory_userInputs[i] == "/")
                     {
-                        display.Insert(0, "(");
+                        display.Insert(x, "(");
                         display.Append(")");
                     }
-
+                    
                     // append input to display list
                     display.Append(memory_userInputs[i]);
 
