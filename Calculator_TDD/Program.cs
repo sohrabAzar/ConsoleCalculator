@@ -187,18 +187,22 @@ Can be entered at any time
                     break;
 
                 case OperationType.convertCelsiusToFarenhit:
+                    SaveResultToMemory(result);
                     result = (currentEnteredNumber * 1.8) + 32;
+                    SaveResultToMemory(result);
                     break;
 
                 case OperationType.convertFarenhitToCelsius:
+                    SaveResultToMemory(result);
                     result = result = (currentEnteredNumber - 32) / 1.8;
+                    SaveResultToMemory(result);
                     break;
 
                 case OperationType.none:
                     result = currentEnteredNumber;
                     break;
             }
-        }
+        }       
 
         private static void DisplayResult()
         {
@@ -260,6 +264,8 @@ Can be entered at any time
 
         private static void Reset()
         {
+            //memory_results.Clear();
+            //memory_userInputs.Clear();
             result = 0;
             previousInputType = InputType.Operation;
             lastOperationType = OperationType.none;
@@ -286,11 +292,11 @@ Can be entered at any time
                 {
                     specialCommand = true;
 
-
+                    AppanedResultToDisplay(display, ref j);
                     display.AppendLine();
                     display.Append(memory_userInputs[i]);
                     display.Append(memory_userInputs[i + 1]);
-
+                    AppanedResultToDisplay(display, ref j);
                     display.AppendLine();
                 }
                 // If previous operation was special command then next string in memory is manually added so dont add it again
@@ -323,6 +329,17 @@ Can be entered at any time
             }
             
             return display;
+        }
+
+        private static void AppanedResultToDisplay(StringBuilder display, ref int j)
+        {
+            display.Append(" = " + memory_results[j].ToString());
+            j += 1;
+        }
+
+        private static void SaveResultToMemory(double result)
+        {
+            memory_results.Add(result);
         }
         #endregion
 
