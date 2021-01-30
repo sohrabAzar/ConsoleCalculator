@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CalculatorClassLibrary;
 
 namespace Calculator_TDD
 {
@@ -21,7 +22,7 @@ namespace Calculator_TDD
                     userInput = Console.ReadLine();
                     ValidateUserInput(userInput);
 
-                } while (!IsUserInputValidMath(userInput));
+                } while (!InputValidator.IsUserInputValidMath(userInput, enteredACommand, previousInputType, ref currentEnteredNumber));
 
                 // Process data based on what was entered
                 // Command processing
@@ -35,12 +36,12 @@ namespace Calculator_TDD
                 {
                     switch (GetCurrentInputType())
                     {
-                        case InputType.Operation:
-                            previousInputType = InputType.Operation;
+                        case Enumrations.InputType.Operation:
+                            previousInputType = Enumrations.InputType.Operation;
                             SetOperationType(userInput);
                             break;
-                        case InputType.Number:
-                            previousInputType = InputType.Number;
+                        case Enumrations.InputType.Number:
+                            previousInputType = Enumrations.InputType.Number;
                             CalculateResult();
                             DisplayResult();
                             break;
@@ -50,11 +51,7 @@ namespace Calculator_TDD
         }
       
         #region **** MEMBERS ****
-        public enum InputType
-        {
-            Number,
-            Operation,
-        }
+
         public enum OperationType
         {
             none,
@@ -75,7 +72,7 @@ namespace Calculator_TDD
             newton
         }
 
-        public static InputType previousInputType = InputType.Operation;
+        public static Enumrations.InputType previousInputType = Enumrations.InputType.Operation;
         public static OperationType lastOperationType = OperationType.none;
         public static double result = 0;                                        // keeps track of the calculation results
         public static double currentEnteredNumber = 0;                          // keeps track of the enetered number, was added during refactoring process number func to avoid doing same thing in validate and calculate funcs
@@ -126,30 +123,30 @@ Can be entered at any time
 *****************************************
 ");
         }
-        private static void ShowConsolePromot(InputType lastInputType)
+        private static void ShowConsolePromot(Enumrations.InputType lastInputType)
         {
             switch (lastInputType)
             {
-                case InputType.Number:
+                case Enumrations.InputType.Number:
                     Console.Write("OPERATION >");
                     break;
-                case InputType.Operation:
+                case Enumrations.InputType.Operation:
                     Console.Write("NUMBER >");
                     break;
             }
         }
 
-        private static InputType GetCurrentInputType()
+        private static Enumrations.InputType GetCurrentInputType()
         {
-            InputType a = InputType.Number;
+            Enumrations.InputType a = Enumrations.InputType.Number;
 
             switch (previousInputType)
             {
-                case InputType.Number:
-                    a = InputType.Operation;
+                case Enumrations.InputType.Number:
+                    a = Enumrations.InputType.Operation;
                     break;
-                case InputType.Operation:
-                    a = InputType.Number;
+                case Enumrations.InputType.Operation:
+                    a = Enumrations.InputType.Number;
                     break;
             }
 
@@ -283,7 +280,7 @@ Can be entered at any time
         private static void ResetConsole()
         {
             result = 0;
-            previousInputType = InputType.Operation;
+            previousInputType = Enumrations.InputType.Operation;
             lastOperationType = OperationType.none;
         }
         private static void ResetMemory()
@@ -407,7 +404,7 @@ Can be entered at any time
         private static void ValidateUserInput(string input)
         {
             // check if input is command, if yes then set input type, if no then check if input is valid
-            if (IsInputAValidCommand(input))
+            if (InputValidator.IsInputAValidCommand(input))
             {
                 enteredACommand = true; // set to ture so that in main a command is executed instead of normal operations
                 SetCommandType(input);
@@ -415,7 +412,7 @@ Can be entered at any time
             // if input not command, check if valid math (numbers and signs), if so add it to memory, if not ask again
             else
             {              
-                if (IsUserInputValidMath(input))
+                if (InputValidator.IsUserInputValidMath(input, enteredACommand, previousInputType, ref currentEnteredNumber))
                 {
                     SaveInputToMemory(input);
                 }
@@ -431,77 +428,7 @@ Can be entered at any time
             memory_userInputs.Add(input);
         }
 
-        #region validate input
-        public static bool IsUserInputValidMath(string input)
-        {
-            bool isInputValid = false;
-
-            if (enteredACommand)
-            {
-                isInputValid = true;
-            }
-            else
-            {
-                switch (previousInputType)
-                {
-                    case InputType.Number:
-                        isInputValid = ValidateOperation(input);
-                        break;
-                    case InputType.Operation:
-                        isInputValid = ValidateNumber(input);
-                        break;
-                }
-            }
-
-            return isInputValid;
-        }
-
-        public static bool IsInputAValidCommand(string input)
-        {
-            bool isInputValid = false;
-
-            if (input == "quit" || input == "help" || input == "reset" || input == "newton" || input == "list")
-            {
-                isInputValid = true;
-            }
-            return isInputValid;
-        }
-        public static bool ValidateNumber(string input)
-        {
-            bool isInputValid = ProceesNumberInput(input);           
-            return isInputValid;
-        }
-        private static bool ProceesNumberInput(string input)
-        {
-            bool isInputValid = false;
-
-            if (input == "MARCUS")
-            {
-                isInputValid = true;
-                currentEnteredNumber = 42;
-            }
-            else
-            {
-                isInputValid = double.TryParse(input, out currentEnteredNumber);
-            }
-            return isInputValid;
-        }
-
-        public static bool ValidateOperation(string input)
-        {
-            bool isInputValid = false;
-
-            if (input == "+" || input == "-" || input == "*" || input == "/" || input == "C" || input == "F")
-            {
-                isInputValid = true;
-            }
-
-            return isInputValid;
-        }
         #endregion
-
-        #endregion
-
         #endregion
 
     }
