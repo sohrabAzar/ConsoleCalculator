@@ -5,10 +5,17 @@ using CalculatorClassLibrary;
 
 namespace Calculator_TDD
 {
+
     public class Program
     {
+        public Program()
+        {
+            Commands.OnListCommandCalled += ListCalled;
+        }
+
         static void Main(string[] args)
         {
+            
             string userInput;
 
             Commands.IntroduceProgram();
@@ -68,7 +75,7 @@ namespace Calculator_TDD
                     break;
             }
         }
-         private static void DisplayResult()
+        private static void DisplayResult()
         {
             if (Core.lastOperationType != Enumrations.OperationType.none)
             {
@@ -83,7 +90,6 @@ namespace Calculator_TDD
         }
 
         #region ** COMMANDS **
-
         private static void ExecuteCommand()
         {
             switch (Commands.command)
@@ -116,15 +122,20 @@ namespace Calculator_TDD
                     break;
             }
         }
+           
+
+        private void ListCalled()
+        {
+            DisplayMemory();
+        }
+
+        
         private static void DisplayMemory()
         {
             StringBuilder display = Memory.BuildMemory();
             Console.WriteLine(display + "\n");
         }
 
-        #endregion
-        #endregion
-       
         #region ** PROCESS USER INPUT **
         private static void ValidateUserInput(string input)
         {
@@ -136,7 +147,7 @@ namespace Calculator_TDD
             }
             // if input not command, check if valid math (numbers and signs), if so add it to memory, if not ask again
             else
-            {              
+            {
                 if (InputValidator.IsUserInputValidMath(input))
                 {
                     Memory.SaveInputToMemory(input);
@@ -149,6 +160,12 @@ namespace Calculator_TDD
 
         }
         #endregion
+
+        #endregion
+
+        #endregion
+
+
 
 
     }

@@ -7,11 +7,52 @@ namespace CalculatorClassLibrary
     public class Commands
     {
         public static bool enteredACommand = false;                            // used to process special commands in main
-
         public static Enumrations.SpecialCommand command = Enumrations.SpecialCommand.none;            // used for keeping track of which special command was entered
-       
+
+        public delegate void ListCommand();
+        public static event ListCommand OnListCommandCalled;
+
+        public static void ExecuteCommand()
+        {
+            switch (command)
+            {
+                case Enumrations.SpecialCommand.none:
+                    break;
+
+                case Enumrations.SpecialCommand.quit:
+                    //quit = true;
+                    break;
+
+                case Enumrations.SpecialCommand.help:
+                    Console.Clear();
+                    Commands.IntroduceProgram();
+                    break;
+
+                case Enumrations.SpecialCommand.list:
+                    if (OnListCommandCalled != null)
+                    {
+                        OnListCommandCalled();
+                    }                   
+                    break;
+
+                case Enumrations.SpecialCommand.reset:
+                    Console.Clear();
+                    Memory.Reset();
+                    break;
+
+                case Enumrations.SpecialCommand.newton:
+                    Commands.Newton();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
         public static void SetCommandType(string input)
         {
+            
+
             foreach (Enumrations.SpecialCommand val in Enum.GetValues(typeof(Enumrations.SpecialCommand)))
             {
                 if (input == val.ToString())
