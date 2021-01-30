@@ -187,15 +187,18 @@ Can be entered at any time
                     break;
 
                 case OperationType.convertCelsiusToFarenhit:
-                    SaveResultToMemory(result);
-                    result = (currentEnteredNumber * 1.8) + 32;
-                    SaveResultToMemory(result);
+                    ConvertTemperature(() =>
+                    {
+                        result = (currentEnteredNumber * 1.8) + 32;
+                    });
                     break;
 
                 case OperationType.convertFarenhitToCelsius:
-                    SaveResultToMemory(result);
-                    result = result = (currentEnteredNumber - 32) / 1.8;
-                    SaveResultToMemory(result);
+                    ConvertTemperature(() =>
+                    {
+                        result = (currentEnteredNumber - 32) / 1.8;
+                    });
+
                     break;
 
                 case OperationType.none:
@@ -203,6 +206,15 @@ Can be entered at any time
                     break;
             }
         }       
+
+        private static void ConvertTemperature(Action action)
+        {
+            SaveResultToMemory(result);
+            action();
+            SaveResultToMemory(result);
+        }
+
+
 
         private static void DisplayResult()
         {
