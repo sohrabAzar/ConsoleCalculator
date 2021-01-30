@@ -68,5 +68,20 @@ namespace CalculatorClassLibrary.Tests
             // Assert
             Assert.AreEqual(excpeted_2, Core.lastOperationType);
         }
+
+        [TestMethod()]
+        public void CalculateResultTest_TempConversions()
+        {
+            // TEST CASE 4 (test temp conversion)
+            // Arrange
+            double excpeted_4 = 32;
+            // Act
+            Core.SetOperationType("C");
+            Core.currentEnteredNumber = 0;
+            Core.CalculateResult();
+            double actual_4 = Core.result;
+            // Assert
+            Assert.AreEqual(excpeted_4, actual_4);
+        }
     }
 }
