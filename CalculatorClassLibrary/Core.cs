@@ -6,6 +6,9 @@ namespace CalculatorClassLibrary
 {
     public class Core
     {
+        public static Enumrations.InputType previousInputType = Enumrations.InputType.Operation;
+        public static Enumrations.OperationType lastOperationType = Enumrations.OperationType.none;
+
         public static void CalculateResult(double currentEnteredNumber, ref double result, Enumrations.OperationType lastOperationType)
         {
             switch (lastOperationType)

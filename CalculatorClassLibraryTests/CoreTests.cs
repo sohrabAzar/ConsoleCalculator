@@ -19,7 +19,7 @@ namespace CalculatorClassLibrary.Tests
             double excpeted_1 = 110;
             // Act
             Program.result = 100;
-            Program.SetOperationType("+");
+            SetOperationType("+");
             Program.currentEnteredNumber = 10;
             Program.CalculateResult();
             double actual_1 = Program.result;
