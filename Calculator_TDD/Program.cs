@@ -310,6 +310,7 @@ Can be entered at any time
                     AppanedResultToDisplay(display, ref j);
                     display.AppendLine();
 
+                    // Add next open parathesis in the begin of next line 
                     x = display.ToString().Length;
 
                 }
