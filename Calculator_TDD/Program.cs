@@ -213,7 +213,7 @@ Can be entered at any time
                 // if temp conversion operation reset calculrator. This can be taken out as well if you want to continue using the result
                 if (lastOperationType == OperationType.convertCelsiusToFarenhit || lastOperationType == OperationType.convertFarenhitToCelsius)
                 {
-                    ResetDisplay();
+                    ResetConsole();
                 }             
             }
         }
@@ -266,9 +266,9 @@ Can be entered at any time
         private static void Reset()
         {
             ResetMemory();
-            ResetDisplay();
+            ResetConsole();
         }
-        private static void ResetDisplay()
+        private static void ResetConsole()
         {
             result = 0;
             previousInputType = InputType.Operation;
@@ -362,7 +362,7 @@ Can be entered at any time
             double m;
             double a;
 
-            Reset();
+            ResetConsole();
 
             Console.WriteLine("\nm(mass) * a(acceleration) = F(force)");
 
