@@ -9,7 +9,10 @@ namespace CalculatorClassLibrary
         public static Enumrations.InputType previousInputType = Enumrations.InputType.Operation;
         public static Enumrations.OperationType lastOperationType = Enumrations.OperationType.none;
 
-        public static void CalculateResult(double currentEnteredNumber, ref double result, Enumrations.OperationType lastOperationType)
+        public static double result = 0;                                        // keeps track of the calculation results
+        public static double currentEnteredNumber = 0;                          // keeps track of the enetered number, was added during refactoring process number func to avoid doing same thing in validate and calculate funcs
+
+        public static void CalculateResult()
         {
             switch (lastOperationType)
             {
@@ -46,7 +49,7 @@ namespace CalculatorClassLibrary
                     break;
             }
         }
-        public static void SetOperationType(string input, ref Enumrations.OperationType lastOperationType)
+        public static void SetOperationType(string input)
         {
             if (input == "+") { lastOperationType = Enumrations.OperationType.add; }
             if (input == "-") { lastOperationType = Enumrations.OperationType.reduce; }
@@ -54,6 +57,23 @@ namespace CalculatorClassLibrary
             if (input == "/") { lastOperationType = Enumrations.OperationType.devide; }
             if (input == "C") { lastOperationType = Enumrations.OperationType.convertCelsiusToFarenhit; }
             if (input == "F") { lastOperationType = Enumrations.OperationType.convertFarenhitToCelsius; }
+        }
+
+        public static Enumrations.InputType GetCurrentInputType()
+        {
+            Enumrations.InputType a = Enumrations.InputType.Number;
+
+            switch (previousInputType)
+            {
+                case Enumrations.InputType.Number:
+                    a = Enumrations.InputType.Operation;
+                    break;
+                case Enumrations.InputType.Operation:
+                    a = Enumrations.InputType.Number;
+                    break;
+            }
+
+            return a;
         }
 
     }

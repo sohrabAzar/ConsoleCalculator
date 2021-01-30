@@ -6,6 +6,8 @@ namespace CalculatorClassLibrary
 {
     public class Commands
     {
+        public static bool enteredACommand = false;                            // used to process special commands in main
+
         public static Enumrations.SpecialCommand command = Enumrations.SpecialCommand.none;            // used for keeping track of which special command was entered
        
         public static void SetCommandType(string input)
@@ -19,12 +21,12 @@ namespace CalculatorClassLibrary
             }
         }
 
-        public static void Newton(out double result, out Enumrations.InputType previousInputType, out Enumrations.OperationType lastOperationType)
+        public static void Newton()
         {
             double m;
             double a;
 
-            Memory.ResetConsole(out result, out previousInputType, out lastOperationType);
+            Memory.ResetConsole();
 
             Console.WriteLine("\nm(mass) * a(acceleration) = F(force)");
 

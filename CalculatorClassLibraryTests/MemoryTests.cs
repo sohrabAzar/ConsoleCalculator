@@ -18,10 +18,10 @@ namespace CalculatorClassLibrary.Tests
             Memory.memory_userInputs.Add("1");
             Memory.memory_userInputs.Add("+");
             Memory.memory_userInputs.Add("2");
-             double result_1 = 3;
+            Core.result = 3;
 
             // Act
-            StringBuilder actual_1 = Memory.BuildMemory(result_1);
+            StringBuilder actual_1 = Memory.BuildMemory();
 
             // Assert
             Assert.AreEqual(excpeted_1, actual_1.ToString());
@@ -36,10 +36,10 @@ namespace CalculatorClassLibrary.Tests
             Memory.memory_userInputs.Add("2");
             Memory.memory_userInputs.Add("*");
             Memory.memory_userInputs.Add("5");
-            double result_2 = 15;
+            Core.result = 15;
 
             // Act
-            StringBuilder actual_2 = Memory.BuildMemory(result_2);
+            StringBuilder actual_2 = Memory.BuildMemory();
 
             // Assert
             Assert.AreEqual(excpeted_2, actual_2.ToString());

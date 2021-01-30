@@ -6,46 +6,46 @@ namespace CalculatorClassLibrary
 {
     public class InputValidator
     {
-        private static bool ProceesNumberInput(string input, out double currentEnteredNumber)
+        private static bool ProceesNumberInput(string input)
         {
             bool isInputValid = false;
 
             if (input == "MARCUS")
             {
                 isInputValid = true;
-                currentEnteredNumber = 42;
+                Core.currentEnteredNumber = 42;
             }
             else
             {
-                isInputValid = double.TryParse(input, out currentEnteredNumber);
+                isInputValid = double.TryParse(input, out Core.currentEnteredNumber);
             }
             return isInputValid;
         }
 
-        public static bool ValidateNumber(string input, out double currentEnteredNumber)
+        public static bool ValidateNumber(string input)
         {
-            bool isInputValid = ProceesNumberInput(input, out currentEnteredNumber);
+            bool isInputValid = ProceesNumberInput(input);
             return isInputValid;
         }
 
-        public static bool IsUserInputValidMath(string input, bool enteredACommand, Enumrations.InputType previousInputType, ref double currentEnteredNumber)
+        public static bool IsUserInputValidMath(string input)
         {
             bool isInputValid = false;
 
-            if (enteredACommand)
+            if (Commands.enteredACommand)
             {
                 isInputValid = true;
             }
             else
             {
-                switch (previousInputType)
+                switch (Core.previousInputType)
                 {
                     case Enumrations.InputType.Number:
                         isInputValid = ValidateOperation(input);
 
                         break;
                     case Enumrations.InputType.Operation:
-                        isInputValid = ValidateNumber(input, out currentEnteredNumber);
+                        isInputValid = ValidateNumber(input);
                         break;
                 }
             }

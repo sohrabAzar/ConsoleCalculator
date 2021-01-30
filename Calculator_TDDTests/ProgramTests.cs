@@ -51,25 +51,6 @@ namespace Calculator_TDD.Tests
         //    Assert.AreEqual(excpeted_4, actual_4);
         //}
 
-        [TestMethod()]
-        public void SetOperationTypeTest()
-        {
-            // TEST CASE 1 (if + then set operation type to add)
-            // Arrange
-            Program.OperationType excpeted_1 = Program.OperationType.add;
-            // Act
-            Program.SetOperationType("+");
-            // Assert
-            Assert.AreEqual(excpeted_1, Program.lastOperationType);
-
-            // TEST CASE 1 (if * then set operation type to add)
-            // Arrange
-            Program.OperationType excpeted_2 = Program.OperationType.multiple;
-            // Act
-            Program.SetOperationType("*");
-            // Assert
-            Assert.AreEqual(excpeted_2, Program.lastOperationType);
-        }
 
         [TestMethod()]
         public void CalculateResultTest_MathOperations()

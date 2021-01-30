@@ -27,7 +27,7 @@ namespace CalculatorClassLibrary
             memory_results.Add(result);
         }
 
-        public static StringBuilder BuildMemory(double result)
+        public static StringBuilder BuildMemory()
         {
 
             StringBuilder display = new StringBuilder();   // Used to create a displayable version of memory 
@@ -78,7 +78,7 @@ namespace CalculatorClassLibrary
                     // Show results for the final line
                     if (i == memory_userInputs.Count - 1)
                     {
-                        display.Append(" = " + result);
+                        display.Append(" = " + Core.result);
                     }
                 }
             }
@@ -92,17 +92,17 @@ namespace CalculatorClassLibrary
             j += 1;
         }
 
-        public static void ResetConsole(out double result, out Enumrations.InputType previousInputType, out Enumrations.OperationType lastOperationType)
+        public static void ResetConsole()
         {
-            result = 0;
-            previousInputType = Enumrations.InputType.Operation;
-            lastOperationType = Enumrations.OperationType.none;
+            Core.result = 0;
+            Core.previousInputType = Enumrations.InputType.Operation;
+            Core.lastOperationType = Enumrations.OperationType.none;
         }
 
-        public static void Reset(out double result, out Enumrations.InputType previousInputType, out Enumrations.OperationType lastOperationType)
+        public static void Reset()
         {
             ResetMemory();
-            ResetConsole(out result, out previousInputType, out lastOperationType);
+            ResetConsole();
         }
     }
 }

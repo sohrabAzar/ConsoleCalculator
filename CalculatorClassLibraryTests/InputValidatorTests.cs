@@ -12,13 +12,11 @@ namespace CalculatorClassLibrary.Tests
         [TestMethod()]
         public void ValidateNumberTest()
         {
-            double a = 0;
-
             // TEST CASE 1 (NotANumberShouldReturnFalse)
             // Arrange
             bool excpeted_1 = false;
             // Act
-            bool actual_1 = InputValidator.ValidateNumber("a", out a);
+            bool actual_1 = InputValidator.ValidateNumber("a");
             // Assert
             Assert.AreEqual(excpeted_1, actual_1);
 
@@ -26,7 +24,7 @@ namespace CalculatorClassLibrary.Tests
             // Arrange
             bool excpeted_2 = true;
             // Act
-            bool actual_2 = InputValidator.ValidateNumber("1", out a);
+            bool actual_2 = InputValidator.ValidateNumber("1");
             // Assert
             Assert.AreEqual(excpeted_2, actual_2);
 
@@ -34,7 +32,7 @@ namespace CalculatorClassLibrary.Tests
             // Arrange
             bool excpeted_3 = true;
             // Act
-            bool actual_3 = InputValidator.ValidateNumber("MARCUS", out a);
+            bool actual_3 = InputValidator.ValidateNumber("MARCUS");
             // Assert
             Assert.AreEqual(excpeted_3, actual_3);
         }
