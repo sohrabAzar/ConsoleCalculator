@@ -8,23 +8,30 @@ namespace CalculatorClassLibrary
     {
         // varibles needed for the list command 
         // used to save user input and calculation internally so they can be shown later 
-        public static List<string> memory_userInputs = new List<string>();
-        public static List<double> memory_results = new List<double>();
+        public static List<string> Memory_userInputs { get; set; }
+        public static List<double> Memory_results { get; set; }
+
+        static Memory()
+        {
+            // Instantiate properties
+            Memory_userInputs = new List<string>();
+            Memory_results = new List<double>();
+        }
 
         public static void SaveInputToMemory(string input)
         {
-            memory_userInputs.Add(input);
+            Memory_userInputs.Add(input);
         }
 
         public static void ResetMemory()
         {
-            memory_results.Clear();
-            memory_userInputs.Clear();
+            Memory_results.Clear();
+            Memory_userInputs.Clear();
         }
 
         public static void SaveResultToMemory(double result)
         {
-            memory_results.Add(result);
+            Memory_results.Add(result);
         }
 
         public static StringBuilder BuildMemory()
@@ -35,18 +42,18 @@ namespace CalculatorClassLibrary
             int j = 0;                                     // Index to manually keep track of the memory_results list
             int x = 0;                                     // Index to know where to add paranthesis to keep formulas math correct with list command
 
-            for (int i = 0; i < Memory.memory_userInputs.Count; i++)
+            for (int i = 0; i < Memory.Memory_userInputs.Count; i++)
             {
                 // Handeling temp conversion
                 // If temp conversion is entered, break line and show it on a seperate line
-                if (memory_userInputs[i] == "C" || memory_userInputs[i] == "F")
+                if (Memory_userInputs[i] == "C" || Memory_userInputs[i] == "F")
                 {
                     TempConversion = true;
 
                     AppanedResultToDisplay(display, ref j);
                     display.AppendLine();
-                    display.Append(memory_userInputs[i]);
-                    display.Append(memory_userInputs[i + 1]);
+                    display.Append(Memory_userInputs[i]);
+                    display.Append(Memory_userInputs[i + 1]);
                     AppanedResultToDisplay(display, ref j);
                     display.AppendLine();
 
@@ -65,18 +72,18 @@ namespace CalculatorClassLibrary
                 else
                 {
                     // check if * or /, if so add parantesis before and after to have a mathematically correct formula
-                    if (memory_userInputs[i] == "*" || memory_userInputs[i] == "/")
+                    if (Memory_userInputs[i] == "*" || Memory_userInputs[i] == "/")
                     {
                         display.Insert(x, "(");
                         display.Append(")");
                     }
 
                     // append input to display list
-                    display.Append(memory_userInputs[i]);
+                    display.Append(Memory_userInputs[i]);
 
 
                     // Show results for the final line
-                    if (i == memory_userInputs.Count - 1)
+                    if (i == Memory_userInputs.Count - 1)
                     {
                         display.Append(" = " + Core.Result);
                     }
@@ -88,7 +95,7 @@ namespace CalculatorClassLibrary
 
         private static void AppanedResultToDisplay(StringBuilder display, ref int j)
         {
-            display.Append(" = " + memory_results[j].ToString());
+            display.Append(" = " + Memory_results[j].ToString());
             j += 1;
         }
 

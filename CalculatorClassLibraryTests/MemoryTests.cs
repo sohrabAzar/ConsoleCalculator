@@ -15,9 +15,9 @@ namespace CalculatorClassLibrary.Tests
             // TEST CASE 1 (simple addtion)
             // Arrange
             string excpeted_1 = "1+2 = 3";
-            Memory.memory_userInputs.Add("1");
-            Memory.memory_userInputs.Add("+");
-            Memory.memory_userInputs.Add("2");
+            Memory.Memory_userInputs.Add("1");
+            Memory.Memory_userInputs.Add("+");
+            Memory.Memory_userInputs.Add("2");
             Core.Result = 3;
 
             // Act
@@ -28,14 +28,14 @@ namespace CalculatorClassLibrary.Tests
 
             // TEST CASE 2 (addtion and multiple)
             // Arrange
-            Memory.memory_userInputs.Clear();
+            Memory.Memory_userInputs.Clear();
 
             string excpeted_2 = "(1+2)*5 = 15";
-            Memory.memory_userInputs.Add("1");
-            Memory.memory_userInputs.Add("+");
-            Memory.memory_userInputs.Add("2");
-            Memory.memory_userInputs.Add("*");
-            Memory.memory_userInputs.Add("5");
+            Memory.Memory_userInputs.Add("1");
+            Memory.Memory_userInputs.Add("+");
+            Memory.Memory_userInputs.Add("2");
+            Memory.Memory_userInputs.Add("*");
+            Memory.Memory_userInputs.Add("5");
             Core.Result = 15;
 
             // Act
