@@ -91,5 +91,18 @@ namespace CalculatorClassLibrary
             display.Append(" = " + memory_results[j].ToString());
             j += 1;
         }
+
+        public static void ResetConsole(out double result, out Enumrations.InputType previousInputType, out Enumrations.OperationType lastOperationType)
+        {
+            result = 0;
+            previousInputType = Enumrations.InputType.Operation;
+            lastOperationType = Enumrations.OperationType.none;
+        }
+
+        public static void Reset(out double result, out Enumrations.InputType previousInputType, out Enumrations.OperationType lastOperationType)
+        {
+            ResetMemory();
+            ResetConsole(out result, out previousInputType, out lastOperationType);
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace Calculator_TDD
         {
             string userInput;
 
-            IntroduceProgram();
+            Commands.IntroduceProgram();
             
             while (!quit)
             {
@@ -38,11 +38,11 @@ namespace Calculator_TDD
                     {
                         case Enumrations.InputType.Operation:
                             previousInputType = Enumrations.InputType.Operation;
-                            SetOperationType(userInput);
+                            Core.SetOperationType(userInput, ref lastOperationType);
                             break;
                         case Enumrations.InputType.Number:
                             previousInputType = Enumrations.InputType.Number;
-                            CalculateResult();
+                            Core.CalculateResult(currentEnteredNumber, ref result, lastOperationType);
                             DisplayResult();
                             break;
                     }
@@ -52,15 +52,6 @@ namespace Calculator_TDD
       
         #region **** MEMBERS ****
 
-        public enum SpecialCommand
-        {
-            none,
-            quit,
-            help,
-            list,
-            reset,
-            newton
-        }
 
         public static Enumrations.InputType previousInputType = Enumrations.InputType.Operation;
         public static Enumrations.OperationType lastOperationType = Enumrations.OperationType.none;
@@ -68,7 +59,7 @@ namespace Calculator_TDD
         public static double currentEnteredNumber = 0;                          // keeps track of the enetered number, was added during refactoring process number func to avoid doing same thing in validate and calculate funcs
 
         private static bool quit = false;                                       // used to exit program main while loop
-        private static SpecialCommand command = SpecialCommand.none;            // used for keeping track of which special command was entered
+        private static Enumrations.SpecialCommand command = Enumrations.SpecialCommand.none;            // used for keeping track of which special command was entered
         private static bool enteredACommand = false;                            // used to process special commands in main
 
         // varibles needed for the list command 
@@ -80,39 +71,6 @@ namespace Calculator_TDD
 
         #region **** METHODS ****
 
-        private static void IntroduceProgram()
-        {
-            Console.Clear();
-
-            // Title
-            Console.WriteLine("SOHRABS CALCULATOR \n");
-
-            // Guide
-            Console.WriteLine(
-@"**** HOW TO USE ****
-Enter any valid input and press enter 
-A list of valid inputs is shown below
-
-(VALID NUMBERS)
-Enter when prompt shows NUMBER
-- Numbers: Any valid doule
-- MARCUS: Write MARCUS instead of number 42
-
-(VALID OPERATIONS)
-Enter when prompt shows OPERATION
-- +, -, *,/: Normal math operations
-- C: Write C and the next number entered is converted to Farenhiet
-- F: Write F and the next number entered is converted to Celsius
-
-(SPECIAL COMMANDS)
-Can be entered at any time
-- quit: Exit program
-- help: Show guideS
-- list: see current calculation
-- reset: reset calculation
-*****************************************
-");
-        }
         private static void ShowConsolePromot(Enumrations.InputType lastInputType)
         {
             switch (lastInputType)
@@ -143,64 +101,6 @@ Can be entered at any time
             return a;
         }
 
-        public static void SetOperationType(string input)
-        {
-            if (input == "+") { lastOperationType = Enumrations.OperationType.add; }
-            if (input == "-") { lastOperationType = Enumrations.OperationType.reduce; }
-            if (input == "*") { lastOperationType = Enumrations.OperationType.multiple; }
-            if (input == "/") { lastOperationType = Enumrations.OperationType.devide; }
-            if (input == "C") { lastOperationType = Enumrations.OperationType.convertCelsiusToFarenhit; }
-            if (input == "F") { lastOperationType = Enumrations.OperationType.convertFarenhitToCelsius; }
-        }
-
-        public static void CalculateResult()
-        {         
-            switch (lastOperationType)
-            {
-                case Enumrations.OperationType.add:
-                    result = result + currentEnteredNumber;
-                    break;
-
-                case Enumrations.OperationType.reduce:
-                    result = result - currentEnteredNumber;
-                    break;
-
-                case Enumrations.OperationType.multiple:
-                    result = result * currentEnteredNumber;
-                    break;
-
-                case Enumrations.OperationType.devide:
-                    result = result / currentEnteredNumber;
-                    break;
-
-                case Enumrations.OperationType.convertCelsiusToFarenhit:
-                    ConvertTemperature(() =>
-                    {
-                        result = (currentEnteredNumber * 1.8) + 32;
-                    });
-                    break;
-
-                case Enumrations.OperationType.convertFarenhitToCelsius:
-                    ConvertTemperature(() =>
-                    {
-                        result = (currentEnteredNumber - 32) / 1.8;
-                    });
-
-                    break;
-
-                case Enumrations.OperationType.none:
-                    result = currentEnteredNumber;
-                    break;
-            }
-        }       
-
-        private static void ConvertTemperature(Action action)
-        {
-            Memory.SaveResultToMemory(result);
-            action();
-            Memory.SaveResultToMemory(result);
-        }
-
         private static void DisplayResult()
         {
             if (lastOperationType != Enumrations.OperationType.none)
@@ -210,172 +110,52 @@ Can be entered at any time
                 // if temp conversion operation reset calculrator. This can be taken out as well if you want to continue using the result
                 if (lastOperationType == Enumrations.OperationType.convertCelsiusToFarenhit || lastOperationType == Enumrations.OperationType.convertFarenhitToCelsius)
                 {
-                    ResetConsole();
+                    Memory.ResetConsole(out result, out previousInputType, out lastOperationType);
                 }             
             }
         }
 
         #region ** COMMANDS **
-        private static void SetCommandType(string input)
-        {
-            foreach (SpecialCommand val in Enum.GetValues(typeof(SpecialCommand)))
-            {
-                if (input == val.ToString())
-                {
-                    command = val;
-                }
-            }
-        }
+
         private static void ExecuteCommand()
         {
-            switch (command)
+            switch (Commands.command)
             {
-                case SpecialCommand.none:
+                case Enumrations.SpecialCommand.none:
                     break;
 
-                case SpecialCommand.quit:
+                case Enumrations.SpecialCommand.quit:
                     quit = true;
                     break;
 
-                case SpecialCommand.help:
+                case Enumrations.SpecialCommand.help:
                     Console.Clear();
-                    IntroduceProgram();
+                    Commands.IntroduceProgram();
                     break;
 
-                case SpecialCommand.list:
+                case Enumrations.SpecialCommand.list:
                     DisplayMemory();
                     break;
 
-                case SpecialCommand.reset:
+                case Enumrations.SpecialCommand.reset:
                     Console.Clear();
-                    Reset();
+                    Memory.Reset(out result, out previousInputType, out lastOperationType);
                     break;
 
-                case SpecialCommand.newton:
-                    Newton();
+                case Enumrations.SpecialCommand.newton:
+                    Commands.Newton(out result, out previousInputType, out lastOperationType);
                     break;
                 default:
                     break;
             }
         }
-
-        #region reset
-        private static void Reset()
-        {
-            Memory.ResetMemory();
-            ResetConsole();
-        }
-        private static void ResetConsole()
-        {
-            result = 0;
-            previousInputType = Enumrations.InputType.Operation;
-            lastOperationType = Enumrations.OperationType.none;
-        }
-        #endregion
-
         #region list
         private static void DisplayMemory()
         {
             StringBuilder display = Memory.BuildMemory(result);
             Console.WriteLine(display + "\n");
         }
-        //public static StringBuilder BuildMemory()
-        //{
 
-        //    StringBuilder display = new StringBuilder();   // Used to create a displayable version of memory 
-        //    bool TempConversion = false;                   // Used to handle special commands
-        //    int j = 0;                                     // Index to manually keep track of the memory_results list
-        //    int x = 0;                                     // Index to know where to add paranthesis to keep formulas math correct with list command
-
-        //    for (int i = 0; i < Memory.memory_userInputs.Count; i++)
-        //    {
-        //        // Handeling temp conversion
-        //        // If temp conversion is entered, break line and show it on a seperate line
-        //        if (Memory.memory_userInputs[i] == "C" || Memory.memory_userInputs[i] == "F")
-        //        {
-        //            TempConversion = true;
-
-        //            AppanedResultToDisplay(display, ref j);
-        //            display.AppendLine();
-        //            display.Append(Memory.memory_userInputs[i]);
-        //            display.Append(Memory.memory_userInputs[i + 1]);
-        //            AppanedResultToDisplay(display, ref j);
-        //            display.AppendLine();
-
-        //            // Add next open parathesis in the begin of next line 
-        //            x = display.ToString().Length;
-
-        //        }
-        //        // If previous operation was special command then next string in memory is manually added so dont add it again
-        //        else if (TempConversion)
-        //        {
-        //            TempConversion = false;
-        //        }
-
-        //        // Handeling normal inputs
-        //        // Append to display list
-        //        else
-        //        {
-        //            // check if * or /, if so add parantesis before and after to have a mathematically correct formula
-        //            if (Memory.memory_userInputs[i] == "*" || Memory.memory_userInputs[i] == "/")
-        //            {
-        //                display.Insert(x, "(");
-        //                display.Append(")");
-        //            }
-                    
-        //            // append input to display list
-        //            display.Append(Memory.memory_userInputs[i]);
-
-
-        //            // Show results for the final line
-        //            if (i == Memory.memory_userInputs.Count - 1)
-        //            {
-        //                display.Append(" = " + result);
-        //            }
-        //        }
-        //    }
-            
-        //    return display;
-        //}
-        //private static void AppanedResultToDisplay(StringBuilder display, ref int j)
-        //{
-        //    display.Append(" = " + Memory.memory_results[j].ToString());
-        //    j += 1;
-        //}
-        #endregion
-
-        #region newton
-        private static void Newton()
-        {
-            double m;
-            double a;
-
-            ResetConsole();
-
-            Console.WriteLine("\nm(mass) * a(acceleration) = F(force)");
-
-            GetNewtonsLawInput("a", out a);
-            GetNewtonsLawInput("m", out m);
-
-            double f = m * a;
-
-            Console.WriteLine($"F = {f}(n) \n");
-        }
-        private static void GetNewtonsLawInput(string inputType, out double value)
-        {
-            bool inputIsValid;
-
-            do
-            {
-                Console.Write($"{inputType}?> ");
-                string input_m = Console.ReadLine();
-                inputIsValid = double.TryParse(input_m, out value);
-                if (!inputIsValid)
-                {
-                    Console.WriteLine("Enter valid mass\n");
-                }
-            } while (!inputIsValid);
-        }
         #endregion
         #endregion
        
@@ -386,7 +166,7 @@ Can be entered at any time
             if (InputValidator.IsInputAValidCommand(input))
             {
                 enteredACommand = true; // set to ture so that in main a command is executed instead of normal operations
-                SetCommandType(input);
+                Commands.SetCommandType(input);
             }
             // if input not command, check if valid math (numbers and signs), if so add it to memory, if not ask again
             else
