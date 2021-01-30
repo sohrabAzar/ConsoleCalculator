@@ -6,7 +6,7 @@ namespace CalculatorClassLibrary
 {
     public class InputValidator
     {
-        public static bool ProceesNumberInput(string input, out double currentEnteredNumber)
+        private static bool ProceesNumberInput(string input, out double currentEnteredNumber)
         {
             bool isInputValid = false;
 
