@@ -27,7 +27,7 @@ namespace Calculator_TDD
                 // Get Input and validate, only process if data is valid
                 do
                 {
-                    ShowConsolePromot(Core.previousInputType);
+                    ShowConsolePromot(Core.PreviousInputType);
                     userInput = Console.ReadLine();
                     ValidateUserInput(userInput);
 
@@ -46,11 +46,11 @@ namespace Calculator_TDD
                     switch (Core.GetCurrentInputType())
                     {
                         case Enumrations.InputType.Operation:
-                            Core.previousInputType = Enumrations.InputType.Operation;
+                            Core.PreviousInputType = Enumrations.InputType.Operation;
                             Core.SetOperationType(userInput);
                             break;
                         case Enumrations.InputType.Number:
-                            Core.previousInputType = Enumrations.InputType.Number;
+                            Core.PreviousInputType = Enumrations.InputType.Number;
                             Core.CalculateResult();
                             DisplayResult();
                             break;
@@ -89,12 +89,12 @@ namespace Calculator_TDD
         }
         private static void DisplayResult()
         {
-            if (Core.lastOperationType != Enumrations.OperationType.none)
+            if (Core.LastOperationType != Enumrations.OperationType.none)
             {
-                Console.WriteLine("= " + Core.result + "\n");
+                Console.WriteLine("= " + Core.Result + "\n");
 
                 // if temp conversion operation reset calculrator. This can be taken out as well if you want to continue using the result
-                if (Core.lastOperationType == Enumrations.OperationType.convertCelsiusToFarenhit || Core.lastOperationType == Enumrations.OperationType.convertFarenhitToCelsius)
+                if (Core.LastOperationType == Enumrations.OperationType.convertCelsiusToFarenhit || Core.LastOperationType == Enumrations.OperationType.convertFarenhitToCelsius)
                 {
                     Memory.ResetConsole();
                 }             

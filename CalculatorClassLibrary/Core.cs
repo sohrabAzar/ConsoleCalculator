@@ -6,64 +6,64 @@ namespace CalculatorClassLibrary
 {
     public class Core
     {
-        public static Enumrations.InputType previousInputType = Enumrations.InputType.Operation;
-        public static Enumrations.OperationType lastOperationType = Enumrations.OperationType.none;
+        public static Enumrations.InputType PreviousInputType { get; set; } = Enumrations.InputType.Operation;
+        public static Enumrations.OperationType LastOperationType { get; set; } = Enumrations.OperationType.none;
+        public static double Result { get; set; }                                    // keeps track of the calculation results
+        public static double CurrentEnteredNumber { get; set; }                      // keeps track of the enetered number, was added during refactoring process number func to avoid doing same thing in validate and calculate funcs       
 
-        public static double result = 0;                                        // keeps track of the calculation results
-        public static double currentEnteredNumber = 0;                          // keeps track of the enetered number, was added during refactoring process number func to avoid doing same thing in validate and calculate funcs
+
 
         public static void CalculateResult()
         {
-            switch (lastOperationType)
+            switch (LastOperationType)
             {
                 case Enumrations.OperationType.add:
-                    result = result + currentEnteredNumber;
+                    Result = Result + CurrentEnteredNumber;
                     break;
 
                 case Enumrations.OperationType.reduce:
-                    result = result - currentEnteredNumber;
+                    Result = Result - CurrentEnteredNumber;
                     break;
 
                 case Enumrations.OperationType.multiple:
-                    result = result * currentEnteredNumber;
+                    Result = Result * CurrentEnteredNumber;
                     break;
 
                 case Enumrations.OperationType.devide:
-                    result = result / currentEnteredNumber;
+                    Result = Result / CurrentEnteredNumber;
                     break;
 
                 case Enumrations.OperationType.convertCelsiusToFarenhit:
-                    Memory.SaveResultToMemory(result);
-                    result = (currentEnteredNumber * 1.8) + 32;
-                    Memory.SaveResultToMemory(result);
+                    Memory.SaveResultToMemory(Result);
+                    Result = (CurrentEnteredNumber * 1.8) + 32;
+                    Memory.SaveResultToMemory(Result);
                     break;
 
                 case Enumrations.OperationType.convertFarenhitToCelsius:
-                    Memory.SaveResultToMemory(result);
-                    result = (currentEnteredNumber - 32) / 1.8;
-                    Memory.SaveResultToMemory(result);
+                    Memory.SaveResultToMemory(Result);
+                    Result = (CurrentEnteredNumber - 32) / 1.8;
+                    Memory.SaveResultToMemory(Result);
                     break;
 
                 case Enumrations.OperationType.none:
-                    result = currentEnteredNumber;
+                    Result = CurrentEnteredNumber;
                     break;
             }
         }
         public static void SetOperationType(string input)
         {
-            if (input == "+") { lastOperationType = Enumrations.OperationType.add; }
-            if (input == "-") { lastOperationType = Enumrations.OperationType.reduce; }
-            if (input == "*") { lastOperationType = Enumrations.OperationType.multiple; }
-            if (input == "/") { lastOperationType = Enumrations.OperationType.devide; }
-            if (input == "C") { lastOperationType = Enumrations.OperationType.convertCelsiusToFarenhit; }
-            if (input == "F") { lastOperationType = Enumrations.OperationType.convertFarenhitToCelsius; }
+            if (input == "+") { LastOperationType = Enumrations.OperationType.add; }
+            if (input == "-") { LastOperationType = Enumrations.OperationType.reduce; }
+            if (input == "*") { LastOperationType = Enumrations.OperationType.multiple; }
+            if (input == "/") { LastOperationType = Enumrations.OperationType.devide; }
+            if (input == "C") { LastOperationType = Enumrations.OperationType.convertCelsiusToFarenhit; }
+            if (input == "F") { LastOperationType = Enumrations.OperationType.convertFarenhitToCelsius; }
         }
-
         public static Enumrations.InputType GetCurrentInputType()
         {
             Enumrations.InputType a = Enumrations.InputType.Number;
 
-            switch (previousInputType)
+            switch (PreviousInputType)
             {
                 case Enumrations.InputType.Number:
                     a = Enumrations.InputType.Operation;

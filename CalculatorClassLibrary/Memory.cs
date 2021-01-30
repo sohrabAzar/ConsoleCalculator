@@ -78,7 +78,7 @@ namespace CalculatorClassLibrary
                     // Show results for the final line
                     if (i == memory_userInputs.Count - 1)
                     {
-                        display.Append(" = " + Core.result);
+                        display.Append(" = " + Core.Result);
                     }
                 }
             }
@@ -94,9 +94,9 @@ namespace CalculatorClassLibrary
 
         public static void ResetConsole()
         {
-            Core.result = 0;
-            Core.previousInputType = Enumrations.InputType.Operation;
-            Core.lastOperationType = Enumrations.OperationType.none;
+            Core.Result = 0;
+            Core.PreviousInputType = Enumrations.InputType.Operation;
+            Core.LastOperationType = Enumrations.OperationType.none;
         }
 
         public static void Reset()

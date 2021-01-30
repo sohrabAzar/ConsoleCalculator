@@ -13,11 +13,15 @@ namespace CalculatorClassLibrary
             if (input == "MARCUS")
             {
                 isInputValid = true;
-                Core.currentEnteredNumber = 42;
+                Core.CurrentEnteredNumber = 42;
             }
             else
             {
-                isInputValid = double.TryParse(input, out Core.currentEnteredNumber);
+                isInputValid = double.TryParse(input, out double a);
+                if (isInputValid)
+                {
+                    Core.CurrentEnteredNumber = a;
+                }
             }
             return isInputValid;
         }
@@ -38,7 +42,7 @@ namespace CalculatorClassLibrary
             }
             else
             {
-                switch (Core.previousInputType)
+                switch (Core.PreviousInputType)
                 {
                     case Enumrations.InputType.Number:
                         isInputValid = ValidateOperation(input);

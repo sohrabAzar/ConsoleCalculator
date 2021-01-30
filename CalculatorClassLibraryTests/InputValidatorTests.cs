@@ -84,7 +84,7 @@ namespace CalculatorClassLibrary.Tests
             // Arrange
             bool excpeted_1 = true;
             // Act
-            Core.previousInputType = Enumrations.InputType.Number;
+            Core.PreviousInputType = Enumrations.InputType.Number;
             bool actual_1 = InputValidator.IsUserInputValidMath("+");
             // Assert
             Assert.AreEqual(excpeted_1, actual_1);
@@ -93,7 +93,7 @@ namespace CalculatorClassLibrary.Tests
             // Arrange
             bool excpeted_2 = false;
             // Act
-            Core.previousInputType = Enumrations.InputType.Number;
+            Core.PreviousInputType = Enumrations.InputType.Number;
             bool actual_2 = InputValidator.IsUserInputValidMath("as");
             // Assert
             Assert.AreEqual(excpeted_2, actual_2);
@@ -102,7 +102,7 @@ namespace CalculatorClassLibrary.Tests
             // Arrange
             bool excpeted_3 = true;
             // Act
-            Core.previousInputType = Enumrations.InputType.Operation;
+            Core.PreviousInputType = Enumrations.InputType.Operation;
             bool actual_3 = InputValidator.IsUserInputValidMath("123");
             // Assert
             Assert.AreEqual(excpeted_3, actual_3);
@@ -111,7 +111,7 @@ namespace CalculatorClassLibrary.Tests
             // Arrange
             bool excpeted_4 = false;
             // Act
-            Core.previousInputType = Enumrations.InputType.Operation;
+            Core.PreviousInputType = Enumrations.InputType.Operation;
             bool actual_4 = InputValidator.IsUserInputValidMath("asd");
             // Assert
             Assert.AreEqual(excpeted_4, actual_4);

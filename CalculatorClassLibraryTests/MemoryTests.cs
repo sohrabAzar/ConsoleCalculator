@@ -18,7 +18,7 @@ namespace CalculatorClassLibrary.Tests
             Memory.memory_userInputs.Add("1");
             Memory.memory_userInputs.Add("+");
             Memory.memory_userInputs.Add("2");
-            Core.result = 3;
+            Core.Result = 3;
 
             // Act
             StringBuilder actual_1 = Memory.BuildMemory();
@@ -36,7 +36,7 @@ namespace CalculatorClassLibrary.Tests
             Memory.memory_userInputs.Add("2");
             Memory.memory_userInputs.Add("*");
             Memory.memory_userInputs.Add("5");
-            Core.result = 15;
+            Core.Result = 15;
 
             // Act
             StringBuilder actual_2 = Memory.BuildMemory();
