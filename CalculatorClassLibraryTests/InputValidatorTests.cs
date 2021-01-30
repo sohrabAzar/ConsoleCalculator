@@ -78,6 +78,7 @@ namespace CalculatorClassLibrary.Tests
             // Assert
             Assert.AreEqual(excpeted_2, actual_2);
         }
+
     }
 
 
