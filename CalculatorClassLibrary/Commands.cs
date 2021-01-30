@@ -9,8 +9,14 @@ namespace CalculatorClassLibrary
         public static bool enteredACommand = false;                            // used to process special commands in main
         public static Enumrations.SpecialCommand command = Enumrations.SpecialCommand.none;            // used for keeping track of which special command was entered
 
+        //Delegate to call list command in main
         public delegate void ListCommand();
         public static event ListCommand OnListCommandCalled;
+
+        //Delegate to call quit command in main
+        public delegate void QuitCommand();
+        public static event QuitCommand OnQuitCommandCalled;
+
 
         public static void ExecuteCommand()
         {
@@ -20,7 +26,10 @@ namespace CalculatorClassLibrary
                     break;
 
                 case Enumrations.SpecialCommand.quit:
-                    //quit = true;
+                    if (OnQuitCommandCalled != null)
+                    {
+                        OnQuitCommandCalled();
+                    }
                     break;
 
                 case Enumrations.SpecialCommand.help:

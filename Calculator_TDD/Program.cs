@@ -8,9 +8,11 @@ namespace Calculator_TDD
 
     public class Program
     {
-        public Program()
+        static Program()
         {
-            Commands.OnListCommandCalled += ListCalled;
+            // Bind Event handlers
+            Commands.OnListCommandCalled += ListCommand;
+            Commands.OnQuitCommandCalled += QuitCommand;
         }
 
         static void Main(string[] args)
@@ -35,7 +37,7 @@ namespace Calculator_TDD
                 // Command processing
                 if (Commands.enteredACommand)
                 {
-                    ExecuteCommand();
+                    Commands.ExecuteCommand();
                     Commands.enteredACommand = false;    // set false so you can go to normal operations after command executed
                 }
                 // Operations and numbers processing
@@ -61,8 +63,19 @@ namespace Calculator_TDD
         private static bool quit = false;                                       // used to exit program main while loop  
         #endregion
 
-        #region **** METHODS ****
+        #region **** EVENT HANDLERS ****
+        private static void ListCommand()
+        {
+            DisplayMemory();
+        }
 
+        private static void QuitCommand()
+        {
+            quit = true;
+        }
+        #endregion
+
+        #region **** METHODS ****
         private static void ShowConsolePromot(Enumrations.InputType lastInputType)
         {
             switch (lastInputType)
@@ -89,54 +102,14 @@ namespace Calculator_TDD
             }
         }
 
-        #region ** COMMANDS **
-        private static void ExecuteCommand()
-        {
-            switch (Commands.command)
-            {
-                case Enumrations.SpecialCommand.none:
-                    break;
-
-                case Enumrations.SpecialCommand.quit:
-                    quit = true;
-                    break;
-
-                case Enumrations.SpecialCommand.help:
-                    Console.Clear();
-                    Commands.IntroduceProgram();
-                    break;
-
-                case Enumrations.SpecialCommand.list:
-                    DisplayMemory();
-                    break;
-
-                case Enumrations.SpecialCommand.reset:
-                    Console.Clear();
-                    Memory.Reset();
-                    break;
-
-                case Enumrations.SpecialCommand.newton:
-                    Commands.Newton();
-                    break;
-                default:
-                    break;
-            }
-        }
-           
-
-        private void ListCalled()
-        {
-            DisplayMemory();
-        }
-
-        
+        #region COMMANDS
         private static void DisplayMemory()
         {
             StringBuilder display = Memory.BuildMemory();
             Console.WriteLine(display + "\n");
         }
 
-        #region ** PROCESS USER INPUT **
+        #region PROCESS USER INPUT
         private static void ValidateUserInput(string input)
         {
             // check if input is command, if yes then set input type, if no then check if input is valid
