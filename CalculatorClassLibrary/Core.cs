@@ -7,10 +7,15 @@ namespace CalculatorClassLibrary
     public class Core
     {
         #region MEMBERS
+        // Keep tack of the last input type that was enetered
         public static Enumrations.InputType PreviousInputType { get; set; } = Enumrations.InputType.Operation;
+        // Keep tack of the last operation type that was enetered
         public static Enumrations.OperationType LastOperationType { get; set; } = Enumrations.OperationType.none;
-        public static double Result { get; set; }                                    // keeps track of the calculation results
-        public static double CurrentEnteredNumber { get; set; }                      // keeps track of the enetered number, was added during refactoring process number func to avoid doing same thing in validate and calculate funcs       
+        // keeps track of the calculation results
+        public static double Result { get; set; }
+        // Keeps track of the enetered number
+        // was added during refactoring process number func to avoid doing same thing in validate and calculate funcs       
+        public static double CurrentEnteredNumber { get; set; }                      
         #endregion
 
         #region METHODS

@@ -24,6 +24,9 @@ namespace CalculatorClassLibrary
         #endregion
 
         #region METHODS
+        /// <summary>
+        /// Execute user special commands
+        /// </summary>
         public static void ExecuteCommand()
         {
             switch (Command)
@@ -82,10 +85,12 @@ namespace CalculatorClassLibrary
                     break;
             }
         }
+        /// <summary>
+        /// Convert user input into a command enum and save it
+        /// </summary>
+        /// <param name="input">User input</param>
         public static void SetCommandType(string input)
         {
-
-
             foreach (Enumrations.SpecialCommand val in Enum.GetValues(typeof(Enumrations.SpecialCommand)))
             {
                 if (input == val.ToString())
@@ -95,12 +100,14 @@ namespace CalculatorClassLibrary
             }
         }
         #region commands
+        // Reset Command
         private static void Reset()
         {
             Memory.ResetMemory();
             Memory.ResetConsole();
         }
         #region newton
+        // Newton command
         public static void Newton()
         {
             double m;
@@ -133,6 +140,7 @@ namespace CalculatorClassLibrary
             } while (!inputIsValid);
         }
         #endregion
+        // Help command
         public static void IntroduceProgram()
         {
             Console.Clear();
