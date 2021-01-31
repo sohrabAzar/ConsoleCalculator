@@ -45,5 +45,16 @@ namespace CalculatorClassLibrary.Tests
             Assert.AreEqual(excpeted_2, actual_2.ToString());
 
         }
+
+        [TestMethod()]
+        public void ResetMemoryTest()
+        {
+            // Act
+            Memory.ResetMemory();
+
+            // Assert
+            Assert.IsTrue(Memory.Memory_userInputs.Count == 0);
+            Assert.IsTrue(Memory.Memory_results.Count == 0);
+        }
     }
 }
