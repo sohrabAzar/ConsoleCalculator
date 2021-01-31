@@ -65,10 +65,16 @@ namespace Calculator_TDD
         #endregion
 
         #region **** EVENT HANDLERS ****
+        /// <summary>
+        /// Event handler to display memory on list command
+        /// </summary>
         private static void ListCommandEventHandler()
         {
             DisplayMemory();
         }
+        /// <summary>
+        /// Event handler to quit program
+        /// </summary>
         private static void QuitCommandEventHandler()
         {
             quit = true;
@@ -94,7 +100,8 @@ namespace Calculator_TDD
             {
                 Console.Write("= " + Core.Result);
 
-                // if temp conversion operation reset calculrator. This can be taken out as well if you want to continue using the result
+                // If temp conversion operation reset calculrator. 
+                // This part can be taken out as well if you want to continue using the result
                 switch (Core.LastOperationType)
                 {
                     case Enumrations.OperationType.convertCelsiusToFarenhit:

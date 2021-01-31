@@ -165,12 +165,13 @@ Enter when prompt shows OPERATION
 - C: Write C and the next number entered is converted to Farenhiet
 - F: Write F and the next number entered is converted to Celsius
 
-(SPECIAL COMMANDS)
+(VALID COMMANDS)
 Can be entered at any time
-- quit: Exit program
 - help: Show guideS
+- newton: newtons firts law formula
 - list: see current calculation
 - reset: reset calculation
+- quit: Exit program
 *****************************************
 ");
         }
