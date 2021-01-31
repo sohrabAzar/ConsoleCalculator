@@ -55,6 +55,8 @@ namespace CalculatorClassLibrary
                     display.Append(Memory_userInputs[i]);
                     display.Append(Memory_userInputs[i + 1]);
                     AppanedResultToDisplay(display, ref j);
+                    string unit = (Memory_userInputs[i] == "C") ? "F" : "C";
+                    display.Append(unit);
                     display.AppendLine();
 
                     // Add next open parathesis in the begin of next line 
