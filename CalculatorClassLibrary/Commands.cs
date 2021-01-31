@@ -109,9 +109,9 @@ namespace CalculatorClassLibrary
             Memory.ResetConsole();
 
             Console.WriteLine("\nm(mass) * a(acceleration) = F(force)");
-
-            GetNewtonsLawInput("a", out a);
+            
             GetNewtonsLawInput("m", out m);
+            GetNewtonsLawInput("a", out a);
 
             double f = m * a;
 
