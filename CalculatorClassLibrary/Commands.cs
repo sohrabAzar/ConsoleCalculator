@@ -45,7 +45,7 @@ namespace CalculatorClassLibrary
 
                 case Enumrations.SpecialCommand.help:
                     Console.Clear();
-                    Commands.IntroduceProgram();
+                    IntroduceProgram();
                     break;
 
                 case Enumrations.SpecialCommand.list:
