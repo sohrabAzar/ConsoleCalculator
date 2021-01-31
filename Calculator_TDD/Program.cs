@@ -94,6 +94,7 @@ namespace Calculator_TDD
             {
                 Console.Write("= " + Core.Result);
 
+                // if temp conversion operation reset calculrator. This can be taken out as well if you want to continue using the result
                 switch (Core.LastOperationType)
                 {
                     case Enumrations.OperationType.convertCelsiusToFarenhit:
@@ -107,13 +108,7 @@ namespace Calculator_TDD
                     default:
                         Console.WriteLine("\n");
                         break;
-                }
-
-                //// if temp conversion operation reset calculrator. This can be taken out as well if you want to continue using the result
-                //if (Core.LastOperationType == Enumrations.OperationType.convertCelsiusToFarenhit || Core.LastOperationType == Enumrations.OperationType.convertFarenhitToCelsius)
-                //{
-
-                //}             
+                }          
             }
         }
 
