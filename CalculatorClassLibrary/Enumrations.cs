@@ -30,8 +30,6 @@ namespace CalculatorClassLibrary
             reset,
             newton
         }
-    }
-
-    
+    }    
 
 }

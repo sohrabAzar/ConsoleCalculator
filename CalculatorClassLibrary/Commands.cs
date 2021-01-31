@@ -72,7 +72,7 @@ namespace CalculatorClassLibrary
 
                 case Enumrations.SpecialCommand.reset:
                     Console.Clear();
-                    Memory.Reset();
+                    Reset();
                     break;
 
                 case Enumrations.SpecialCommand.newton:
@@ -94,6 +94,13 @@ namespace CalculatorClassLibrary
                 }
             }
         }
+        #region commands
+        private static void Reset()
+        {
+            Memory.ResetMemory();
+            Memory.ResetConsole();
+        }
+        #region newton
         public static void Newton()
         {
             double m;
@@ -125,6 +132,7 @@ namespace CalculatorClassLibrary
                 }
             } while (!inputIsValid);
         }
+        #endregion
         public static void IntroduceProgram()
         {
             Console.Clear();
@@ -158,6 +166,7 @@ Can be entered at any time
 *****************************************
 ");
         }
+        #endregion
         #endregion
 
 

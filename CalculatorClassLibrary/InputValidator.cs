@@ -25,13 +25,11 @@ namespace CalculatorClassLibrary
             }
             return isInputValid;
         }
-
         public static bool ValidateNumber(string input)
         {
             bool isInputValid = ProceesNumberInput(input);
             return isInputValid;
         }
-
         public static bool IsUserInputValidMath(string input)
         {
             bool isInputValid = false;
@@ -56,7 +54,6 @@ namespace CalculatorClassLibrary
 
             return isInputValid;
         }
-
         public static bool ValidateOperation(string input)
         {
             bool isInputValid = false;
@@ -68,7 +65,6 @@ namespace CalculatorClassLibrary
 
             return isInputValid;
         }
-
         public static bool IsInputAValidCommand(string input)
         {
             bool isInputValid = false;

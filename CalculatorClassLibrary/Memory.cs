@@ -22,18 +22,10 @@ namespace CalculatorClassLibrary
         {
             Memory_userInputs.Add(input);
         }
-
-        public static void ResetMemory()
-        {
-            Memory_results.Clear();
-            Memory_userInputs.Clear();
-        }
-
         public static void SaveResultToMemory(double result)
         {
             Memory_results.Add(result);
         }
-
         public static StringBuilder BuildMemory()
         {
 
@@ -92,24 +84,21 @@ namespace CalculatorClassLibrary
 
             return display;
         }
-
         private static void AppanedResultToDisplay(StringBuilder display, ref int j)
         {
             display.Append(" = " + Memory_results[j].ToString());
             j += 1;
         }
-
+        public static void ResetMemory()
+        {
+            Memory_results.Clear();
+            Memory_userInputs.Clear();
+        }
         public static void ResetConsole()
         {
             Core.Result = 0;
             Core.PreviousInputType = Enumrations.InputType.Operation;
             Core.LastOperationType = Enumrations.OperationType.none;
-        }
-
-        public static void Reset()
-        {
-            ResetMemory();
-            ResetConsole();
         }
     }
 }
