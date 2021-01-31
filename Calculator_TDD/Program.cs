@@ -96,11 +96,12 @@ namespace Calculator_TDD
         }
         private static void DisplayResult()
         {
+            // when first entry operation is none, if not first entry then show result
             if (Core.LastOperationType != Enumrations.OperationType.none)
             {
                 Console.Write("= " + Core.Result);
 
-                // If temp conversion operation reset calculrator. 
+                // If temp conversion operation add temp unit at the end and reset calculrator. 
                 // This part can be taken out as well if you want to continue using the result
                 switch (Core.LastOperationType)
                 {
@@ -115,7 +116,7 @@ namespace Calculator_TDD
                     default:
                         Console.WriteLine("\n");
                         break;
-                }          
+                }
             }
         }
 
