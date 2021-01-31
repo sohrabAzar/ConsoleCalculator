@@ -6,6 +6,8 @@ namespace CalculatorClassLibrary
 {
     public class InputValidator
     {
+
+        #region METHODS
         private static bool ProceesNumberInput(string input)
         {
             bool isInputValid = false;
@@ -75,7 +77,6 @@ namespace CalculatorClassLibrary
             }
             return isInputValid;
         }
-
-
+        #endregion
     }
 }

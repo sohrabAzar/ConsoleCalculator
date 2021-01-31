@@ -6,10 +6,12 @@ namespace CalculatorClassLibrary
 {
     public class Memory
     {
+        #region MEMBERS
         // varibles needed for the list command 
         // used to save user input and calculation internally so they can be shown later 
         public static List<string> Memory_userInputs { get; set; }
         public static List<double> Memory_results { get; set; }
+        #endregion
 
         static Memory()
         {
@@ -18,6 +20,12 @@ namespace CalculatorClassLibrary
             Memory_results = new List<double>();
         }
 
+        #region METHODS
+        private static void AppanedResultToDisplay(StringBuilder display, ref int j)
+        {
+            display.Append(" = " + Memory_results[j].ToString());
+            j += 1;
+        }
         public static void SaveInputToMemory(string input)
         {
             Memory_userInputs.Add(input);
@@ -84,11 +92,7 @@ namespace CalculatorClassLibrary
 
             return display;
         }
-        private static void AppanedResultToDisplay(StringBuilder display, ref int j)
-        {
-            display.Append(" = " + Memory_results[j].ToString());
-            j += 1;
-        }
+
         public static void ResetMemory()
         {
             Memory_results.Clear();
@@ -100,5 +104,7 @@ namespace CalculatorClassLibrary
             Core.PreviousInputType = Enumrations.InputType.Operation;
             Core.LastOperationType = Enumrations.OperationType.none;
         }
+        #endregion
+
     }
 }
