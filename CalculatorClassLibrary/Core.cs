@@ -15,10 +15,22 @@ namespace CalculatorClassLibrary
         public static double Result { get; set; }
         // Keeps track of the enetered number
         // was added during refactoring process number func to avoid doing same thing in validate and calculate funcs       
-        public static double CurrentEnteredNumber { get; set; }                      
+        public static double CurrentEnteredNumber { get; set; }
         #endregion
 
         #region METHODS
+
+        #region private
+        /// <summary>
+        /// If first entry after console reset, operation is none
+        /// </summary>
+        /// <returns>True is first entry</returns>
+        private static bool IsFirstUserEntry()
+        {
+            return (Core.LastOperationType == Enumrations.OperationType.none);
+        }
+        #endregion
+
         public static void CalculateResult()
         {
             switch (LastOperationType)
@@ -80,6 +92,39 @@ namespace CalculatorClassLibrary
             }
 
             return a;
+        }
+
+        /// <summary>
+        /// Get Calculation results,ready to be shown on UI
+        /// </summary>
+        /// <returns>Results for UI</returns>
+        public static string GetCalculationResultForUIDisplay()
+        {
+            StringBuilder ResultForUIDisplay = new StringBuilder();
+
+            // when first entry operation is none, if not first entry then show result
+            if (!(IsFirstUserEntry()))
+            {
+                ResultForUIDisplay.Append(Core.Result);
+
+                // If temp conversion operation add temp unit at the end and reset calculrator. 
+                // This part can be taken out as well if you want to continue using the result
+                switch (Core.LastOperationType)
+                {
+                    case Enumrations.OperationType.convertCelsiusToFarenhit:
+                        ResultForUIDisplay.Append("F");
+                        Memory.ResetConsole();
+                        break;
+                    case Enumrations.OperationType.convertFarenhitToCelsius:
+                        ResultForUIDisplay.Append("C");
+                        Memory.ResetConsole();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return ResultForUIDisplay.ToString();
         }
         #endregion
 

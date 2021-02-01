@@ -70,7 +70,8 @@ namespace Calculator_TDD
         /// </summary>
         private static void ListCommandEventHandler()
         {
-            DisplayMemory();
+            StringBuilder display = Memory.BuildMemory();
+            Console.WriteLine(display + "\n");
         }
         /// <summary>
         /// Event handler to quit program
@@ -94,43 +95,16 @@ namespace Calculator_TDD
                     break;
             }
         }
+
         /// <summary>
         /// Used to show results on console after each operation is entered
         /// </summary>
         private static void DisplayResult()
         {
-            // when first entry operation is none, if not first entry then show result
-            if (Core.LastOperationType != Enumrations.OperationType.none)
-            {
-                Console.Write("= " + Core.Result);
-
-                // If temp conversion operation add temp unit at the end and reset calculrator. 
-                // This part can be taken out as well if you want to continue using the result
-                switch (Core.LastOperationType)
-                {
-                    case Enumrations.OperationType.convertCelsiusToFarenhit:
-                        Console.WriteLine("F\n");
-                        Memory.ResetConsole();
-                        break;
-                    case Enumrations.OperationType.convertFarenhitToCelsius:
-                        Console.WriteLine("C\n");
-                        Memory.ResetConsole();
-                        break;
-                    default:
-                        Console.WriteLine("\n");
-                        break;
-                }
-            }
-        }
-
-        #region COMMANDS
-        /// <summary>
-        /// Used to Dislpay calculator memory when the list command is used
-        /// </summary>
-        private static void DisplayMemory()
-        {
-            StringBuilder display = Memory.BuildMemory();
-            Console.WriteLine(display + "\n");
+            // Write result on console, if result is not empty space between lines
+            // Done since first user entry should not show any results
+            Console.Write(Core.GetCalculationResultForUIDisplay());
+            if (Core.GetCalculationResultForUIDisplay() != "") { Console.WriteLine("\n"); }
         }
 
         #region PROCESS USER INPUT
@@ -160,7 +134,7 @@ namespace Calculator_TDD
 
         #endregion
 
-        #endregion
+
 
 
 

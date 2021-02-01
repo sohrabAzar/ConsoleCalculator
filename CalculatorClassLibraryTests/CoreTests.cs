@@ -83,5 +83,29 @@ namespace CalculatorClassLibrary.Tests
             // Assert
             Assert.AreEqual(excpeted_4, actual_4);
         }
+
+        [TestMethod()]
+        public void GetCalculationResultForUIDisplayTest()
+        {
+            // TEST CASE 1 (if operation type if convert to farenhiet the should show result with F)
+            // Arrange
+            Core.LastOperationType = Enumrations.OperationType.convertCelsiusToFarenhit;
+            Core.Result = 10;
+            string excpeted_1 = "10F";
+            // Act
+            string actual_1 = Core.GetCalculationResultForUIDisplay();
+            // Assert
+            Assert.AreEqual(excpeted_1, excpeted_1);
+
+            // TEST CASE 2 (if operation type if convert to celcius the should show result with C)
+            // Arrange
+            Core.LastOperationType = Enumrations.OperationType.convertFarenhitToCelsius;
+            Core.Result = 45;
+            string excpeted_2 = "45C";
+            // Act
+            string actual_2 = Core.GetCalculationResultForUIDisplay();
+            // Assert
+            Assert.AreEqual(excpeted_2, excpeted_2);
+        }
     }
 }
