@@ -25,7 +25,7 @@ namespace CalculatorClassLibrary
         /// If first entry after console reset, operation is none
         /// </summary>
         /// <returns>True is first entry</returns>
-        private static bool IsFirstUserEntry()
+        public static bool IsFirstUserEntry()
         {
             return (Core.LastOperationType == Enumrations.OperationType.none);
         }

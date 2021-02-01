@@ -101,10 +101,14 @@ namespace Calculator_TDD
         /// </summary>
         private static void DisplayResult()
         {
-            // Write result on console, if result is not empty space between lines
-            // Done since first user entry should not show any results
+            // Write result on console
+            // Check for first uder entry, done since first user entry should not show any results
+            bool firstEntry = Core.IsFirstUserEntry();
             Console.Write(Core.GetCalculationResultForUIDisplay());
-            if (Core.GetCalculationResultForUIDisplay() != "") { Console.WriteLine("\n"); }
+            if (!firstEntry) 
+            { 
+                Console.WriteLine("\n"); 
+            }
         }
 
         #region PROCESS USER INPUT
