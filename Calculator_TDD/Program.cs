@@ -103,9 +103,9 @@ namespace Calculator_TDD
         {
             // Write result on console
             // Check for first uder entry, done since first user entry should not show any results
-            bool firstEntry = Core.IsFirstUserEntry();
+            bool firstInput = Core.IsFirstUserInput();
             Console.Write(Core.GetCalculationResultForUIDisplay());
-            if (!firstEntry) 
+            if (!firstInput) 
             { 
                 Console.WriteLine("\n"); 
             }

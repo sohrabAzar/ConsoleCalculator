@@ -25,7 +25,7 @@ namespace CalculatorClassLibrary
         /// If first entry after console reset, operation is none
         /// </summary>
         /// <returns>True is first entry</returns>
-        public static bool IsFirstUserEntry()
+        public static bool IsFirstUserInput()
         {
             return (Core.LastOperationType == Enumrations.OperationType.none);
         }
@@ -103,7 +103,7 @@ namespace CalculatorClassLibrary
             StringBuilder ResultForUIDisplay = new StringBuilder();
 
             // when first entry operation is none, if not first entry then show result
-            if (!(IsFirstUserEntry()))
+            if (!(IsFirstUserInput()))
             {
                 ResultForUIDisplay.Append(Core.Result);
 
