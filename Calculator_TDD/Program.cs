@@ -94,6 +94,9 @@ namespace Calculator_TDD
                     break;
             }
         }
+        /// <summary>
+        /// Used to show results on console after each operation is entered
+        /// </summary>
         private static void DisplayResult()
         {
             // when first entry operation is none, if not first entry then show result
@@ -121,6 +124,9 @@ namespace Calculator_TDD
         }
 
         #region COMMANDS
+        /// <summary>
+        /// Used to Dislpay calculator memory when the list command is used
+        /// </summary>
         private static void DisplayMemory()
         {
             StringBuilder display = Memory.BuildMemory();
