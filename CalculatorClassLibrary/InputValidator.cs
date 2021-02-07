@@ -85,6 +85,8 @@ namespace CalculatorClassLibrary
             }
             else
             {
+                // If input is valid double then check if temp coversion and for the celcius and farenheit 
+                // limits before setting as valid
                 isInputValid = double.TryParse(input, out double a);
                 if (isInputValid)
                 {

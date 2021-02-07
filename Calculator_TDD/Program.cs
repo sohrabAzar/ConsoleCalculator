@@ -87,11 +87,28 @@ namespace Calculator_TDD
         {
             switch (lastInputType)
             {
+                // Entering Operation
                 case Enumrations.InputType.Number:
                     Console.Write("OPERATION >");
                     break;
+
+                // Enetering Numbers
                 case Enumrations.InputType.Operation:
-                    Console.Write("NUMBER >");
+
+                    // If operation is temp then show console as temp otherwise number
+                    switch (Core.LastOperationType)
+                    {
+                        case Enumrations.OperationType.convertCelsiusToFarenhit:
+                            Console.Write("TEMPERATURE >");
+                            break;
+                        case Enumrations.OperationType.convertFarenhitToCelsius:
+                            Console.Write("TEMPERATURE >");
+                            break;
+                        default:
+                            Console.Write("NUMBER >");
+                            break;
+                    }
+                
                     break;
             }
         }
