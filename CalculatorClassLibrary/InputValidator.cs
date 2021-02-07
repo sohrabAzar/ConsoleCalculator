@@ -88,7 +88,18 @@ namespace CalculatorClassLibrary
                 isInputValid = double.TryParse(input, out double a);
                 if (isInputValid)
                 {
-                    Core.CurrentEnteredNumber = a;
+                    switch (Core.LastOperationType)
+                    {
+                        case Enumrations.OperationType.convertCelsiusToFarenhit:
+                            isInputValid = (a > -273.15);
+                            break;
+                        case Enumrations.OperationType.convertFarenhitToCelsius:
+                            isInputValid = (a > -459.67);
+                            break;
+                        default:
+                            Core.CurrentEnteredNumber = a;
+                            break;
+                    }                                      
                 }
             }
             return isInputValid;
