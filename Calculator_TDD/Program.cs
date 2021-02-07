@@ -99,10 +99,10 @@ namespace Calculator_TDD
                     switch (Core.LastOperationType)
                     {
                         case Enumrations.OperationType.convertCelsiusToFarenhit:
-                            Console.Write("TEMPERATURE >");
+                            Console.Write("CELSIUS >");
                             break;
                         case Enumrations.OperationType.convertFarenhitToCelsius:
-                            Console.Write("TEMPERATURE >");
+                            Console.Write("FARENHIT >");
                             break;
                         default:
                             Console.Write("NUMBER >");
@@ -146,7 +146,20 @@ namespace Calculator_TDD
                 }
                 else
                 {
-                    Console.WriteLine($"enter a valid {Core.GetCurrentInputType()} \n");
+                    // If operation is temp then show console as temp otherwise number
+                    switch (Core.LastOperationType)
+                    {
+                        case Enumrations.OperationType.convertCelsiusToFarenhit:
+                            Console.WriteLine("ENTER A VALID CELSIUS VALUE\n");
+                            break;
+                        case Enumrations.OperationType.convertFarenhitToCelsius:
+                            Console.WriteLine("ENTER A VALID FARENHEIT VALUE\n");
+                            break;
+                        default:
+                            Console.WriteLine($"ENTER A VALID {Core.GetCurrentInputType()} \n");
+                            break;
+                    }
+                    
                 }
             }
 
